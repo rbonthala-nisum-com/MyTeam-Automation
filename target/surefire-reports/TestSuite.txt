@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: TestSuite
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 6.786 sec <<< FAILURE! - in TestSuite
+testcase_001_myTimeApplication_LoginTest(com.mytime.testsuite.MyTimeTestSuite)  Time elapsed: 0.012 sec  <<< FAILURE!
+java.lang.NullPointerException: null
+	at com.mytime.testsuite.MyTimeTestSuite.testcase_001_myTimeApplication_LoginTest(MyTimeTestSuite.java:43)
+

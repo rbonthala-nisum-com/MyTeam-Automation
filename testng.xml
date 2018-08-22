@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<suite name="myTime test suite" verbose="1" >
+  <test name="my Time Regression suite" >
+  
+  <listeners>
+  <listener class-name ="com.mytime.listeners.TestListeners"/>
+  </listeners>
+  
+    <classes>
+      <class name="com.mytime.testsuite.MyTimeTestSuite">
+      </class>
+      
+    </classes>
+ </test>
+</suite>
