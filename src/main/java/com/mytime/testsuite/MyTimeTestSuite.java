@@ -5,10 +5,10 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.mytime.initialization.WebDriverInitialization;
+import com.mytime.applicationdata.ApplicationDataCarrier;
 import com.mytime.applicationpages.HomePage;
 import com.mytime.applicationpages.WelcomePage;
-import com.mytime.applicationdata.ApplicationDataCarrier;
+import com.mytime.initialization.WebDriverInitialization;
 
 /**
  * This will contain all test cases belongs to myTime
@@ -31,17 +31,13 @@ public class MyTimeTestSuite extends WebDriverInitialization{
 	@Test(timeOut=120000)
 	public void testcase_001_myTimeApplication_LoginTest()
 	{
-		//step 1 - click on login button
 		welcomePage.clickOnSignInWithGoogleButton();
-		
-		
-		
 	}
 	
 	@AfterMethod
 	public void tearDown(){
 //		getWebDriver().close();
 		
-	}
+	}	
 
 }

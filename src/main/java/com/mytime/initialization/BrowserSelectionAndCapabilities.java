@@ -69,7 +69,7 @@ public class BrowserSelectionAndCapabilities {
 	public String getFirefoxDriverPath() {
 
 		String firefoxDriverLocation = System.getProperty("user.dir") + fileSeperator
-				+ "BrowserDrivers" + fileSeperator + "Drivers" + fileSeperator;
+				+ "BrowserDrivers" + fileSeperator;
 		firefoxDriverLocation = firefoxDriverLocation + "geckodriver.exe";
 		return firefoxDriverLocation;
 	}
