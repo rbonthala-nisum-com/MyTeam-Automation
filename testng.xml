@@ -4,7 +4,7 @@
   <test name="my Time Regression suite" >
   
   <listeners>
-  <listener class-name ="com.mytime.listeners.TestListeners"/>
+  <listener class-name ="com.mytime.listeners.MyTimeListener"/>
   </listeners>
   
     <classes>

@@ -10,7 +10,8 @@ import org.testng.ISuiteListener;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
-import com.mytime.reportorganizer.ScreenshotHandler;
+
+import com.nisum.automation.screen.handlers.ScreenshotHandler;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;

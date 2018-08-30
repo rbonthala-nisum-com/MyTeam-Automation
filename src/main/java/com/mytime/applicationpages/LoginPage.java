@@ -2,10 +2,10 @@ package com.mytime.applicationpages;
 
 import org.openqa.selenium.WebDriver;
 
-import com.mytime.reusablemethods.ReusableMethods;
+import com.nisum.automation.components.Clicks;
 
 
-public class LoginPage extends ReusableMethods{
+public class LoginPage extends Clicks{
 
 	/**
 	 * Constructor to get driver object.
