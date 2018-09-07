@@ -3,8 +3,8 @@ package com.mytime.applicationpages;
 import org.openqa.selenium.WebDriver;
 
 import com.mytime.locators.ManageAccount_Locators;
-import com.nisum.automation.components.Clicks;
-import com.nisum.automation.components.TextField;
+import com.nisum.qa.automation.components.Clicks;
+import com.nisum.qa.automation.components.TextField;
 
 public class ManageAccount_Page extends Clicks{
 

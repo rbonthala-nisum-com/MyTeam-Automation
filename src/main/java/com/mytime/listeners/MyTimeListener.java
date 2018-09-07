@@ -11,7 +11,7 @@ import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
 
-import com.nisum.automation.screen.handlers.ScreenshotHandler;
+import com.nisum.qa.automation.handlers.ScreenshotHandler;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;

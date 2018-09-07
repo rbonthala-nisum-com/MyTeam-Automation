@@ -5,8 +5,8 @@ import org.openqa.selenium.WebElement;
 
 import com.mytime.locators.HomePageLocators;
 import com.mytime.locators.LoginPageLocators;
-import com.nisum.automation.components.Clicks;
-import com.nisum.automation.components.TextField;
+import com.nisum.qa.automation.components.Clicks;
+import com.nisum.qa.automation.components.TextField;
 
 /**
  * This is used to create page functions for Home page.
@@ -34,15 +34,15 @@ public class HomePage extends Clicks {
 	/**
 	 * To enter user name text field.
 	 **/
-	public void enterUserName(String uName) {
-		new TextField(driver).userTypeIntoTextField(HomePageLocators.loginLocator, uName, waitTime30Seconds);
+	public void enterUserName(WebDriver driver,String uName) {
+		new TextField(driver).userTypeIntoTextField(HomePageLocators.userNameLocator, uName, waitTime30Seconds);
 	}
 
 	/**
 	 * To enter user name text field.
 	 **/
-	public void enterPassword(String password) {
-		new TextField(driver).userTypeIntoTextField(HomePageLocators.loginLocator, password, waitTime30Seconds);
+	public void enterPassword(WebDriver driver,String password) {
+		new TextField(driver).userTypeIntoTextField(HomePageLocators.passWordLocator, password, waitTime30Seconds);
 	}
 
 	/**

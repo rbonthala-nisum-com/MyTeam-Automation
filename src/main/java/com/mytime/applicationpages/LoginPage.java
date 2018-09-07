@@ -2,7 +2,7 @@ package com.mytime.applicationpages;
 
 import org.openqa.selenium.WebDriver;
 
-import com.nisum.automation.components.Clicks;
+import com.nisum.qa.automation.components.Clicks;
 
 
 public class LoginPage extends Clicks{
