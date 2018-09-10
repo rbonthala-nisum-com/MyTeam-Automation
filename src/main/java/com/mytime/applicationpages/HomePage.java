@@ -53,12 +53,4 @@ public class HomePage extends Clicks {
 
 	}
 
-	public static void lnk_ClickEmail(WebDriver driver) {
-
-		element = driver.findElement(LoginPageLocators.clickEmail);
-	}
-
-	public static void lnk_ChooseEmail(WebDriver driver) {
-		element = driver.findElement(LoginPageLocators.chooseEmail);
-	}
 }

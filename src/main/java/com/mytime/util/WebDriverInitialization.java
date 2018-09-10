@@ -1,5 +1,7 @@
 package com.mytime.util;
 
+import java.util.Properties;
+
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.annotations.AfterClass;
@@ -12,6 +14,8 @@ import com.nisum.qa.automation.util.PropertiesUtils;
 public class WebDriverInitialization {
 
 	protected WebDriver driver;
+	
+	private Properties prop = PropertiesUtils.getInstance().readPropertyValue(MyTeamUtils.getPropertiesFilePath());
 
 	public WebDriver getDriver() {
 		return driver;
@@ -24,8 +28,8 @@ public class WebDriverInitialization {
 	@BeforeClass(alwaysRun = true)
 	public void launchBrowser(ITestContext context) {
 		Browsers browser = new Browsers();
-		driver = browser.launchSpecifiedBrowser(PropertiesUtils.getInstance().readPropertyValue(MyTeamUtils.getPropertiesFilePath(), "browserName"),
-				context);
+		driver = browser.launchSpecifiedBrowser(getProp().getProperty("browserName"),context);
+		driver.manage().deleteAllCookies();
 	}
 
 	@AfterClass(alwaysRun = true)
@@ -33,5 +37,13 @@ public class WebDriverInitialization {
 		if (driver != null) {
 			driver.quit();
 		}
+	}
+
+	public Properties getProp() {
+		return prop;
+	}
+
+	public void setProp(Properties prop) {
+		this.prop = prop;
 	}
 }
