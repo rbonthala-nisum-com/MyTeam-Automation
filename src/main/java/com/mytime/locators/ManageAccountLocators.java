@@ -2,7 +2,7 @@ package com.mytime.locators;
 
 import org.openqa.selenium.By;
 
-public interface ManageAccount_Locators {
+public interface ManageAccountLocators {
 
 	By manageAccountModule = By.xpath("//span[text()='Manage Accounts']");
 	By colAccountID = By.xpath("//span[text()='Account ID']");

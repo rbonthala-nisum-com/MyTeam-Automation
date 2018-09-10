@@ -1,4 +1,4 @@
-package com.mytime.applicationpages;
+package com.mytime.pages;
 
 import org.openqa.selenium.WebDriver;
 

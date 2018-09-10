@@ -1,14 +1,14 @@
-package com.mytime.applicationpages;
+package com.mytime.pages;
 
 import org.openqa.selenium.WebDriver;
 
 import com.mytime.locators.ManageGroupLocators;
 import com.nisum.qa.automation.components.Clicks;
 
-public class ManageGroup_Page extends Clicks{
+public class ManageGroupPage extends Clicks{
 
 	
-	public ManageGroup_Page(WebDriver driver)
+	public ManageGroupPage(WebDriver driver)
 	{
 		super(driver);
 	}

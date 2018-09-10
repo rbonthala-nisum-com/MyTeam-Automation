@@ -1,4 +1,4 @@
-package com.mytime.applicationpages;
+package com.mytime.pages;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;

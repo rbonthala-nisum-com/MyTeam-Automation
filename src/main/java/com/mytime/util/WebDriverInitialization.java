@@ -15,7 +15,7 @@ public class WebDriverInitialization {
 
 	protected WebDriver driver;
 	
-	private Properties prop = PropertiesUtils.getInstance().readPropertyValue(MyTeamUtils.getPropertiesFilePath());
+	private Properties properties = PropertiesUtils.getInstance().readPropertyValue(MyTeamUtils.getPropertiesFilePath());
 
 	public WebDriver getDriver() {
 		return driver;
@@ -28,7 +28,7 @@ public class WebDriverInitialization {
 	@BeforeClass(alwaysRun = true)
 	public void launchBrowser(ITestContext context) {
 		Browsers browser = new Browsers();
-		driver = browser.launchSpecifiedBrowser(getProp().getProperty("browserName"),context);
+		driver = browser.launchSpecifiedBrowser(getProperty().getProperty("browserName"),context);
 		driver.manage().deleteAllCookies();
 	}
 
@@ -39,11 +39,11 @@ public class WebDriverInitialization {
 		}
 	}
 
-	public Properties getProp() {
-		return prop;
+	public Properties getProperty() {
+		return properties;
 	}
 
-	public void setProp(Properties prop) {
-		this.prop = prop;
+	public void setProperty(Properties prop) {
+		this.properties = prop;
 	}
 }
