@@ -4,7 +4,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.mytime.locators.HomePageLocators;
-import com.mytime.locators.LoginPageLocators;
 import com.nisum.qa.automation.components.Clicks;
 import com.nisum.qa.automation.components.TextField;
 

@@ -1,18 +1,16 @@
 package com.mytime.testsuite;
 
+import org.apache.log4j.Logger;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.mytime.pages.HomePage;
 import com.mytime.pages.LoginPage;
 import com.mytime.pages.ManageAccountPage;
 import com.mytime.pages.ManageGroupPage;
 import com.mytime.pages.WelcomePage;
-import com.mytime.util.MyTeamLogger;
 import com.mytime.util.MyTeamUtils;
 import com.mytime.util.WebDriverInitialization;
-import com.nisum.qa.automation.components.TimeOutMethods;
 import com.nisum.qa.automation.util.ExcelUtils;
 
 /**
@@ -20,37 +18,41 @@ import com.nisum.qa.automation.util.ExcelUtils;
  */
 public class MyTimeTestSuite extends WebDriverInitialization {
 
-	HomePage homePage;
-	LoginPage loginPage;
+	Logger log;
+	LoginPage login;
 	WelcomePage welcomePage;
-	ManageGroupPage manageGroupPage;
-	ManageAccountPage manageAccountPage;
-	ExcelUtils excelUtils;
+	ManageAccountPage manageAccountPage = new ManageAccountPage(getDriver());
+	ExcelUtils excelUtils = new ExcelUtils();
 
 	@BeforeMethod
 	public void setUp() {
-		welcomePage = new WelcomePage(getDriver());
-		WelcomePage.navigateToMyTimeApplicationURL(getProperty().getProperty("myTimeApplicationURL"));
-		MyTeamLogger.getInstance().info("Successfully opened the website MyTeam");
+		log = Logger.getLogger(getClass());
+		welcomePage = new WelcomePage(driver);
+		login = new LoginPage(getDriver());
+		welcomePage.navigateToMyTimeApplicationURL(getProperty().getProperty("myTimeApplicationURL"));
+		log.info("Before Method");
 	}
 
-	@Test(timeOut = 120000, priority = 1)
+/*	@Test(timeOut = 120000, priority = 1)
 	public void loginTest() throws Exception {
+		initLogin();
+	}*/
+
+	private void initLogin() {
 		String parentWindow = driver.getWindowHandle();
 		welcomePage.clickOnSignInWithGoogleButton();
-		TimeOutMethods.sleepInSeconds(10);
-		welcomePage.enterUserCredentials(driver, parentWindow, getProperty().getProperty("username"),
-				getProperty().getProperty("password"));
-		homePage.clickOnLoginAfterCredntialsButton();
+		welcomePage.sleepInSeconds(10);
+		welcomePage.enterUserCredentials(login, parentWindow, getProperty().getProperty("username"), getProperty().getProperty("password"));
+		login.clickOnLoginConformationPopup(driver);
 		driver.switchTo().window(parentWindow);
-		TimeOutMethods.implicitWaitForGivenTime(60);
-		Thread.sleep(10000);
 	}
 
 	@Test(timeOut = 120000, priority = 2)
 	public void addAccount() {
+		initLogin();
+		ManageGroupPage manageGroupPage = new ManageGroupPage(driver);
 		manageGroupPage.clickOnManageGroupModule(driver);
-		manageAccountPage.add_Account(driver,
+		manageAccountPage.addAccount(driver,
 				excelUtils.getCellData(MyTeamUtils.getExcelPath(), getProperty().getProperty("sheetName"),
 						"AccountName"),
 				excelUtils.getCellData(MyTeamUtils.getExcelPath(), getProperty().getProperty("sheetName"),
@@ -61,7 +63,7 @@ public class MyTimeTestSuite extends WebDriverInitialization {
 
 	@AfterMethod
 	public void tearDown() {
-		getDriver().quit();
+		 getDriver().close();
 	}
 
 }

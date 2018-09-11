@@ -11,29 +11,29 @@ import com.nisum.qa.automation.components.Window;
 public class WelcomePage extends Clicks {
 
 	static Logger log;
-	HomePage homePage;
 	Window window;
 
 	public WelcomePage(WebDriver driver) {
 		super(driver);
 	}
 
-	public static void navigateToMyTimeApplicationURL(String URL) {
+	public void navigateToMyTimeApplicationURL(String URL) {
 		navigateToURL(URL);
 	}
 
 	public void clickOnSignInWithGoogleButton() {
 		userClick(WelcomePageLocators.myTime_Sign_In_With_Google_Button, TimeOutMethods.waitTime10Seconds);
+//		TimeOutMethods.sleepInSeconds(waitTime10Seconds);
+//		driver.navigate().refresh();
 		sleepInSeconds(waitTime10Seconds);
 	}
 
-	public void enterUserCredentials(WebDriver driver, String parentWindow, String userName, String passWord) {
-
-		homePage = new HomePage(driver);
+	public void enterUserCredentials(LoginPage login, String parentWindow, String userName, String passWord) {
 		window = new Window(driver);
-		window.switchToNewWindow(driver,parentWindow, waitTime30Seconds);
+		window.switchToNewWindow(driver, parentWindow, waitTime30Seconds);
 		sleepInSeconds(waitTime30Seconds);
-		homePage.enterUserName(driver, userName);
-		homePage.enterPassword(driver, passWord);
+		login.enterUserName(driver, userName);
+		login.enterPassword(driver, passWord);
+		login.clickOnLoginButton();
 	}
 }

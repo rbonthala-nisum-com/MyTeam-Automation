@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 
 import com.mytime.locators.ManageGroupLocators;
 import com.nisum.qa.automation.components.Clicks;
+import com.nisum.qa.automation.components.TimeOutMethods;
 
 public class ManageGroupPage extends Clicks{
 
@@ -14,6 +15,6 @@ public class ManageGroupPage extends Clicks{
 	}
 	public void clickOnManageGroupModule(WebDriver driver)
 	{
-		userClick(ManageGroupLocators.manageGroupIcon, 10);
+		userClick(ManageGroupLocators.manageGroupIcon, TimeOutMethods.waitTime30Seconds);
 	}
 }
