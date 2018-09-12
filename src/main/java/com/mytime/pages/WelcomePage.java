@@ -23,14 +23,13 @@ public class WelcomePage extends Clicks {
 
 	public void clickOnSignInWithGoogleButton() {
 		userClick(WelcomePageLocators.myTime_Sign_In_With_Google_Button, TimeOutMethods.waitTime10Seconds);
-//		TimeOutMethods.sleepInSeconds(waitTime10Seconds);
-//		driver.navigate().refresh();
 		sleepInSeconds(waitTime10Seconds);
 	}
 
 	public void enterUserCredentials(LoginPage login, String parentWindow, String userName, String passWord) {
 		window = new Window(driver);
 		window.switchToNewWindow(driver, parentWindow, waitTime30Seconds);
+		driver.navigate().refresh();
 		sleepInSeconds(waitTime30Seconds);
 		login.enterUserName(driver, userName);
 		login.enterPassword(driver, passWord);

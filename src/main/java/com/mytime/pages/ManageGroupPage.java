@@ -13,7 +13,7 @@ public class ManageGroupPage extends Clicks{
 	{
 		super(driver);
 	}
-	public void clickOnManageGroupModule(WebDriver driver)
+	public void clickOnManageGroupModule()
 	{
 		userClick(ManageGroupLocators.manageGroupIcon, TimeOutMethods.waitTime30Seconds);
 	}

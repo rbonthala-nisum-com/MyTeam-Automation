@@ -4,5 +4,6 @@ import org.openqa.selenium.By;
 
 public interface ManageGroupLocators {
 
-	By manageGroupIcon = By.xpath("//*[@id=\"sidebar-wrapper\"]/ul/li[1]/a/text()");
+	By manageGroupIcon = By.xpath("//a[@ng-click='toggleManage()']");
+	
 }

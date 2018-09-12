@@ -21,8 +21,6 @@ public class MyTimeTestSuite extends WebDriverInitialization {
 	Logger log;
 	LoginPage login;
 	WelcomePage welcomePage;
-	ManageAccountPage manageAccountPage = new ManageAccountPage(getDriver());
-	ExcelUtils excelUtils = new ExcelUtils();
 
 	@BeforeMethod
 	public void setUp() {
@@ -33,37 +31,43 @@ public class MyTimeTestSuite extends WebDriverInitialization {
 		log.info("Before Method");
 	}
 
-/*	@Test(timeOut = 120000, priority = 1)
-	public void loginTest() throws Exception {
-		initLogin();
-	}*/
+	/*
+	 * @Test(timeOut = 120000, priority = 1) public void loginTest() throws
+	 * Exception { initLogin(); }
+	 */
 
 	private void initLogin() {
 		String parentWindow = driver.getWindowHandle();
 		welcomePage.clickOnSignInWithGoogleButton();
 		welcomePage.sleepInSeconds(10);
-		welcomePage.enterUserCredentials(login, parentWindow, getProperty().getProperty("username"), getProperty().getProperty("password"));
+		welcomePage.enterUserCredentials(login, parentWindow, getProperty().getProperty("username"),
+				getProperty().getProperty("password"));
 		login.clickOnLoginConformationPopup(driver);
 		driver.switchTo().window(parentWindow);
 	}
 
-	@Test(timeOut = 120000, priority = 2)
+	@Test(priority = 2)
 	public void addAccount() {
 		initLogin();
 		ManageGroupPage manageGroupPage = new ManageGroupPage(driver);
-		manageGroupPage.clickOnManageGroupModule(driver);
-		manageAccountPage.addAccount(driver,
-				excelUtils.getCellData(MyTeamUtils.getExcelPath(), getProperty().getProperty("sheetName"),
+		ManageAccountPage manageAccountPage = new ManageAccountPage(driver);
+//		ExcelUtils excel = new ExcelUtils();
+		manageGroupPage.clickOnManageGroupModule();
+		manageAccountPage.addAccount(
+				ExcelUtils.getCellData(MyTeamUtils.getExcelPath(), getProperty().getProperty("sheetName"),
 						"AccountName"),
-				excelUtils.getCellData(MyTeamUtils.getExcelPath(), getProperty().getProperty("sheetName"),
+				ExcelUtils.getCellData(MyTeamUtils.getExcelPath(), getProperty().getProperty("sheetName"),
+						"IndustryType"),
+				ExcelUtils.getCellData(MyTeamUtils.getExcelPath(), getProperty().getProperty("sheetName"),
 						"ClientAddress"),
-				excelUtils.getCellData(MyTeamUtils.getExcelPath(), getProperty().getProperty("sheetName"),
+				ExcelUtils.getCellData(MyTeamUtils.getExcelPath(), getProperty().getProperty("sheetName"),
 						"DeliveryManagers"));
+
 	}
 
 	@AfterMethod
 	public void tearDown() {
-		 getDriver().close();
+		getDriver().close();
 	}
 
 }

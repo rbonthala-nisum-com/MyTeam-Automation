@@ -2,9 +2,12 @@ package com.mytime.locators;
 
 import org.openqa.selenium.By;
 
+import com.mytime.util.MyTeamUtils;
+
 public interface ManageAccountLocators {
 
-	By manageAccountModule = By.xpath("//span[text()='Manage Accounts']");
+	
+	By manageAccountModule = By.xpath("//span[text()='Manage Accounts ']");
 	By colAccountID = By.xpath("//span[text()='Account ID']");
 	By colAccountName = By.xpath("//span[text()='Account Name']");
 	By colIndustryType = By.xpath("//span[text()='Industry Type']");
@@ -15,8 +18,9 @@ public interface ManageAccountLocators {
 	By txtAccountName = By.xpath("//input[@id='accountName']");
 	By dropIndustryTypeFiled = By.xpath("//md-select[@id='industryType']");
 	By txtClientAddress = By.xpath("//textarea[@id='clientAddress']");
-	By dropDeliveryManagersField = By.xpath("//md-select[@id='selectManager']");
-	By dropDeliveryManagersValue = By.xpath("//md-option[@class='ng-scope md-checkbox-enabled md-ink-ripple']/div[contains(text(),'Madhuri Bayyagari')]");
+	By dropDeliveryManagersField = By.name("deliveryManagers");
+	By dropDeliveryManagersValue = By.xpath(
+			"//md-option[@class='ng-scope md-checkbox-enabled md-ink-ripple']/div[contains(text(),'Madhuri Bayyagari')]");
 	By txtDeliveryManagerSearch = By.xpath("//input[@id='search']");
 	By chkDeliveryManager = By.xpath("//div[@class='md-container']");
 	By btnSubmitAddAccount = By.id("addButton");
@@ -25,5 +29,12 @@ public interface ManageAccountLocators {
 	By accountCols = By.xpath("//div[contains(@class,'ng-binding ng-scope')]");
 	By accountColText = By.xpath("//div[@class='ui-grid-canvas']/div/div/div");
 	By accountHeaders = By.xpath("//span[@class='ui-grid-header-cell-label ng-binding']");
-	
-	}
+//	By dropIndustryTypeValue = By.xpath("//*[@class='md-select-menu-container md-active md-clickable']//md-option[@value='"+ MyTeamUtils.dropValue("industryType","AddAccount") +"']");
+
+//	class ManageAccountDropdowns {
+//
+//		public static By dropIndustryTypeValue = By.xpath("//*[@class='md-select-menu-container md-active md-clickable']//md-option[@value='"+ MyTeamUtils.dropValue("industryType","IndustryType") +"']");
+//	}
+
+}
+
