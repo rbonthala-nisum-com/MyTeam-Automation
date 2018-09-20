@@ -29,6 +29,12 @@ public interface ManageAccountLocators {
 	By accountCols = By.xpath("//div[contains(@class,'ng-binding ng-scope')]");
 	By accountColText = By.xpath("//div[@class='ui-grid-canvas']/div/div/div");
 	By accountHeaders = By.xpath("//span[@class='ui-grid-header-cell-label ng-binding']");
+	By txtSearchAccountName = By.className("ui-grid-filter-input ui-grid-filter-input-0 ng-touched");
+	By btnOk = By.xpath("//button[text()='Ok']");
+	By pageRefresh = By.className("fa fa-refresh");
+	By addAccountSuccessMessage = By.xpath("//*[contains(@class , 'ng-binding')and text()='Account assigned successfully']");
+//	By addAccountSuccessMessage = By.xpath("//div[@class='md-dialog-content-body ng-scope']/p");
+//	By deliveryManagersCloseIcon = By.className("glyphicon glyphicon-remove close-mdselect");
 //	By dropIndustryTypeValue = By.xpath("//*[@class='md-select-menu-container md-active md-clickable']//md-option[@value='"+ MyTeamUtils.dropValue("industryType","AddAccount") +"']");
 
 //	class ManageAccountDropdowns {
