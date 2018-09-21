@@ -21,23 +21,21 @@ public class ManageAccountPage extends Clicks {
 			userClick(ManageAccountLocators.manageAccountModule, TimeOutMethods.waitTime10Seconds);
 			userClick(ManageAccountLocators.btnAddAccount, TimeOutMethods.waitTime10Seconds);
 			sleepInSeconds(2000);
-			enterText.userTypeIntoTextField(ManageAccountLocators.txtAccountName, accName,
-					TimeOutMethods.waitTime10Seconds);
+			enterText.userTypeIntoTextField(ManageAccountLocators.txtAccountName, accName,"sendKeys",TimeOutMethods.waitTime10Seconds);
 			userClick(ManageAccountLocators.dropIndustryTypeFiled, TimeOutMethods.waitTime10Seconds);
 
 			userClick(MangeDropDownLocators.industryType(industryType), TimeOutMethods.waitTime10Seconds);
 			sleepInSeconds(2000);
-			enterText.userTypeIntoTextField(ManageAccountLocators.txtClientAddress, clientAddr,
-					TimeOutMethods.waitTime10Seconds);
+			enterText.userTypeIntoTextField(ManageAccountLocators.txtClientAddress,clientAddr,"sendKeys",TimeOutMethods.waitTime10Seconds);
 			userClick(ManageAccountLocators.dropDeliveryManagersField, TimeOutMethods.waitTime10Seconds);
 			for (int i = 0; i < delManager.length; i++) {
-				enterText.userTypeIntoTextField(ManageAccountLocators.txtDeliveryManagerSearch, delManager[i],
+				enterText.userTypeIntoTextField(ManageAccountLocators.txtDeliveryManagerSearch,delManager[i],"sendKeys", 
 						TimeOutMethods.waitTime10Seconds);
 				sleepInSeconds(2000);
 				userClick(ManageAccountLocators.chkDeliveryManager, TimeOutMethods.waitTime10Seconds);
 				sleepInSeconds(2000);
 				if (i != delManager.length-1) {
-					enterText.userClearTheTextField(ManageAccountLocators.txtDeliveryManagerSearch,
+					enterText.userTypeIntoTextField(ManageAccountLocators.txtDeliveryManagerSearch,"","clearText",
 							TimeOutMethods.waitTime10Seconds);
 					sleepInSeconds(1000);
 				}

@@ -73,74 +73,7 @@ public class MyTeamUtils {
 		return data;
 	}
 
-	public static void compareAccountWithDb(String dbRecord, Map<String, String> uiRecord) {
-
-		AccountDTO accountDTO = null;
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			accountDTO = mapper.readValue(dbRecord, AccountDTO.class);
-		} catch (JsonParseException e) {
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		for (Map.Entry<String, String> pair : uiRecord.entrySet()) {
-			String uiDelManagers[] = accountDTO.getDeliveryManagers();
-			if (accountDTO.getAccountName().equals(pair.getValue())) {
-				Assert.assertTrue(true, "Account Name entered in ui is " + accountDTO.getAccountName()
-						+ " and Account Name stored in database is " + pair.getValue() + " both are same");
-				continue;
-//			} else {
-//				Assert.assertFalse(true, "Account Name entered in ui is " + accountDTO.getAccountName()
-//						+ " and Account Name stored in database is " + pair.getValue() + " both are same");
-			}
-			if (accountDTO.getIndustryType().equals(pair.getValue())) {
-				Assert.assertTrue(true, "IndustryType entered in ui is " + accountDTO.getIndustryType()
-						+ " and IndustryType stored in database is " + pair.getValue() + " both are same");
-				continue;
-//			} else {
-//				Assert.assertFalse(true, "IndustryType entered in ui is " + accountDTO.getIndustryType()
-//						+ " and IndustryType stored in database is " + pair.getValue() + " both are same");
-
-			}
-//			if (accountDTO.getClientAddress().equals(pair.getValue())) {
-//				Assert.assertTrue(true, "ClientAddress entered in ui is " + accountDTO.getClientAddress()
-//						+ " and ClientAddress stored in database is " + pair.getValue() + " both are same");
-//				continue;
-//			} else {
-//				Assert.assertFalse(true, "ClientAddress entered in ui is " + accountDTO.getClientAddress()
-//						+ " and ClientAddress stored in database is " + pair.getValue() + " both are same");
-//			}
-			String dbDelManagers[] = pair.getValue().split(",");
-			if (compareTwoStringArrays(uiDelManagers, dbDelManagers)) {
-				Assert.assertTrue(true, "UI Delivery Managers are stored in database successfully");
-				continue;
-			} else {
-				Assert.assertFalse(false, "Delivery Managers are not stored as expected in database");
-			}
-
-		}
-	}
-
-	public static boolean compareTwoStringArrays(String[] s1, String[] s2) {
-		if (s1 == null || s2 == null) {
-			Assert.fail("two strings are not euqal");
-		}
-		if (s1.length != s2.length) {
-			Assert.fail("1st length of the String is " + s1.length + " 2nd length of the String is" + s2.length
-					+ " we cannot compare those String because both lengths are not equal ");
-		}
-//		for (int i = 0; i < s1.length; i++) {
-//			if (!s1[i].equals(s2[i])) {
-//				Assert.fail(s1[i] + " value is not equal with value " + s2[i]);
-//				return false;
-//			}
-//		}
-		return true;
-	}
-
+	
 }
 
 // public static String accoutRow(String accName, WebDriver driver, By

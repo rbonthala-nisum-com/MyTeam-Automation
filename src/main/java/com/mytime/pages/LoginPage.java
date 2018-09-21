@@ -40,13 +40,13 @@ public class LoginPage extends Clicks {
 	 * To enter user name text field.
 	 **/
 	public void enterUserName(WebDriver driver,String uName) {
-		new TextField(driver).userTypeIntoTextField(HomePageLocators.userNameLocator, uName, waitTime30Seconds);
+		new TextField(driver).userTypeIntoTextField(HomePageLocators.userNameLocator, uName, "sendKeys", waitTime30Seconds);
 	}
 
 	/**
 	 * To enter user name text field.
 	 **/
 	public void enterPassword(WebDriver driver,String password) {
-		new TextField(driver).userTypeIntoTextField(HomePageLocators.passWordLocator, password, waitTime30Seconds);
+		new TextField(driver).userTypeIntoTextField(HomePageLocators.passWordLocator, password,"sendKeys",  waitTime30Seconds);
 	}
 }

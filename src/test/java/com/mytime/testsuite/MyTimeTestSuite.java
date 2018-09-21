@@ -10,11 +10,13 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.mytime.database.dto.AccountDTO;
+import com.mytime.database.dto.EmployeeDTO;
 import com.mytime.locators.ManageAccountLocators;
 import com.mytime.pages.LoginPage;
 import com.mytime.pages.ManageAccountPage;
 import com.mytime.pages.ManageGroupPage;
 import com.mytime.pages.WelcomePage;
+import com.mytime.util.MyTeamDbUtils;
 import com.mytime.util.MyTeamUtils;
 import com.mytime.util.WebDriverInitialization;
 import com.nisum.qa.automation.util.ExcelUtils;
@@ -50,11 +52,11 @@ public class MyTimeTestSuite extends WebDriverInitialization {
 		driver.switchTo().window(parentWindow);
 	}
 
-	private String getDbRecord(Map<String, String> colNameValuePair) {
+	private String getDbRecord(Map<String, String> colNameValuePair, String tableName) {
 
 		// colNameValuePair.put(key, value);
 		String dbRecord = getDbRecord(getProp().getProperty("hostName"), getProp().getProperty("dbName"),
-				getProp().getProperty("tableName"), colNameValuePair);
+				tableName, colNameValuePair);
 		return dbRecord;
 	}
 
@@ -62,6 +64,8 @@ public class MyTimeTestSuite extends WebDriverInitialization {
 	public void addAccount() {
 		initLogin();
 		AccountDTO dto = new AccountDTO();
+		EmployeeDTO empDto = new EmployeeDTO();
+		MyTeamDbUtils dbUtils = new MyTeamDbUtils();
 		Map<String, String> excelData = ExcelUtils.getCellData(MyTeamUtils.getExcelPath(), "AddAccount");
 		List<String> acctData = excelData.entrySet().stream().map(Map.Entry::getValue).collect(Collectors.toList());
 		List<String> acctCols = excelData.entrySet().stream().map(Map.Entry::getKey).collect(Collectors.toList());
@@ -71,15 +75,31 @@ public class MyTimeTestSuite extends WebDriverInitialization {
 
 		// ExcelUtils excel = new ExcelUtils();
 		manageGroupPage.clickOnManageGroupModule();
-		manageAccountPage.addAccount(acctData.get(0), acctData.get(1), acctData.get(3), acctData.get(2).split(","));
+		String delManagers[] = acctData.get(2).split(",");
+		manageAccountPage.addAccount(acctData.get(0), acctData.get(1), acctData.get(3), delManagers);
 		Map<String, String> uiAccData = MyTeamUtils.accoutRow(acctData.get(0), driver,
 				ManageAccountLocators.accountTable, ManageAccountLocators.accountHeaders);
 
 		Map<String, String> colNameValuePair = new HashedMap<String, String>();
 		colNameValuePair.put(acctCols.get(0), acctData.get(0));
-		String dbAcctData = getDbRecord(colNameValuePair);
-		MyTeamUtils.compareAccountWithDb(dbAcctData, uiAccData);
-
+		String dbAcctData = getDbRecord(colNameValuePair,"Accounts");
+		colNameValuePair.clear();
+		String dbEmpData = "";
+		String empId = "";
+		for(int i=0;i<delManagers.length;i++){
+			colNameValuePair.put("EmployeeName", delManagers[i]);
+			if(i==delManagers.length-1) {
+			dbEmpData = getDbRecord(colNameValuePair,"EmployeeDetails");
+			empDto = dbUtils.convertEmpJsonToJavaObject(dbEmpData, empDto);
+			empId = empId + empDto.getEmployeeId();
+			}else {
+				dbEmpData = getDbRecord(colNameValuePair,"EmployeeDetails");
+				empDto = dbUtils.convertEmpJsonToJavaObject(dbEmpData, empDto);
+				empId = empId + empDto.getEmployeeId() +",";
+			}
+		}
+		dto = dbUtils.convertAccountJsonToJavaObject(dbAcctData, dto);
+		dbUtils.compareAccountWithDb(dto, uiAccData, empDto, empId.split(","));
 	}
 
 	@AfterMethod
