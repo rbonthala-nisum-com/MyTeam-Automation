@@ -45,13 +45,14 @@ public class MyTeamUtils {
 
 	}
 
-	public static Map<String, String> accoutRow(String accName, WebDriver driver, By accountTable,
-			By tableHeaderNames) {
+	public static Map<String, String> getEntireRowOrActionsColumn(String accName, WebDriver driver, By accountTable, By tableHeaderNames,
+			String functionality) {
 
 		Map<String, String> data = new HashMap<String, String>();
 		int rowsCount;
 		int colsCount;
 		String accountName;
+		WebElement col;
 		WebElement Table = driver.findElement(accountTable);
 		List<WebElement> rows = Table.findElements(By.xpath("(//div[@class='ng-isolate-scope'])"));
 		rowsCount = rows.size();
@@ -62,10 +63,21 @@ public class MyTeamUtils {
 			accountName = Table.findElement(By.xpath("(//div[@class='ng-isolate-scope'])[" + i + "]/div[1]")).getText();
 			if (accountName.equalsIgnoreCase(accName)) {
 				List<WebElement> headers = driver.findElements(tableHeaderNames);
-				for (int j = 1; j < colsCount; j++) {
-					WebElement col = row
-							.findElement(By.xpath("(//div[@class='ng-isolate-scope'])[" + i + "]/div[" + j + "]"));
-					data.put(headers.get(j - 1).getText(), col.getText());
+				if ((functionality.replace("\\s","").trim().equalsIgnoreCase("Actions")||functionality.replace("\\s","").trim().equalsIgnoreCase("ActionsColumn"))){
+					colsCount = cols.size();
+					for (int j = 1; j <= colsCount; j++) {
+						col = row.findElement(By.xpath("(//div[@class='ng-isolate-scope'])[" + i + "]/div[" + j + "]"));
+						if(j==colsCount) {
+						data.put(headers.get(j - 1).getText(),"(//div[@class='ng-isolate-scope'])[" + i + "]/div[" + j + "]");
+						break;
+						}
+					}
+				}
+				if (functionality.replace("\\s","").trim().equalsIgnoreCase("EntireRow")) {
+					for (int j = 1; j < colsCount; j++) {
+						col = row.findElement(By.xpath("(//div[@class='ng-isolate-scope'])[" + i + "]/div[" + j + "]"));
+						data.put(headers.get(j - 1).getText(), col.getText());
+					}
 				}
 				break;
 			}
@@ -73,7 +85,6 @@ public class MyTeamUtils {
 		return data;
 	}
 
-	
 }
 
 // public static String accoutRow(String accName, WebDriver driver, By

@@ -2,6 +2,7 @@ package com.mytime.testsuite;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.map.HashedMap;
@@ -28,6 +29,10 @@ public class MyTimeTestSuite extends WebDriverInitialization {
 
 	LoginPage login;
 	WelcomePage welcomePage;
+	MyTeamDbUtils dbUtils;
+	Map<String, String> excelData = ExcelUtils.getCellData(MyTeamUtils.getExcelPath(), "AddAccount");
+	ManageGroupPage manageGroupPage;
+	ManageAccountPage manageAccountPage;
 
 	@BeforeMethod
 	public void setUp() {
@@ -65,20 +70,16 @@ public class MyTimeTestSuite extends WebDriverInitialization {
 		initLogin();
 		AccountDTO dto = new AccountDTO();
 		EmployeeDTO empDto = new EmployeeDTO();
-		MyTeamDbUtils dbUtils = new MyTeamDbUtils();
-		Map<String, String> excelData = ExcelUtils.getCellData(MyTeamUtils.getExcelPath(), "AddAccount");
+		dbUtils = new MyTeamDbUtils();
+		manageGroupPage = new ManageGroupPage(driver);
+		manageGroupPage.clickOnManageGroupModule();
+		manageAccountPage = new ManageAccountPage(driver);
+		manageAccountPage.clickOnManageAccountModule();
 		List<String> acctData = excelData.entrySet().stream().map(Map.Entry::getValue).collect(Collectors.toList());
 		List<String> acctCols = excelData.entrySet().stream().map(Map.Entry::getKey).collect(Collectors.toList());
-		// AccountData account = new AccountData();
-		ManageGroupPage manageGroupPage = new ManageGroupPage(driver);
-		ManageAccountPage manageAccountPage = new ManageAccountPage(driver);
-
-		// ExcelUtils excel = new ExcelUtils();
-		manageGroupPage.clickOnManageGroupModule();
 		String delManagers[] = acctData.get(2).split(",");
-		manageAccountPage.addAccount(acctData.get(0), acctData.get(1), acctData.get(3), delManagers);
-		Map<String, String> uiAccData = MyTeamUtils.accoutRow(acctData.get(0), driver,
-				ManageAccountLocators.accountTable, ManageAccountLocators.accountHeaders);
+		manageAccountPage.addAccount(acctData.get(0), acctData.get(1), acctData.get(4), delManagers);
+		Map<String, String> uiAccData = MyTeamUtils.getEntireRowOrActionsColumn(acctData.get(0), driver,ManageAccountLocators.accountTable, ManageAccountLocators.accountHeaders,"EntireRow");
 
 		Map<String, String> colNameValuePair = new HashedMap<String, String>();
 		colNameValuePair.put(acctCols.get(0), acctData.get(0));
@@ -101,10 +102,28 @@ public class MyTimeTestSuite extends WebDriverInitialization {
 		dto = dbUtils.convertAccountJsonToJavaObject(dbAcctData, dto);
 		dbUtils.compareAccountWithDb(dto, uiAccData, empDto, empId.split(","));
 	}
-
+	@Test(priority = 3)
+	public void updateAccount() {
+		initLogin();
+		manageGroupPage = new ManageGroupPage(driver);
+		manageGroupPage.clickOnManageGroupModule();
+		manageAccountPage = new ManageAccountPage(driver);
+		manageAccountPage.clickOnManageAccountModule();
+		List<String> acctData = excelData.entrySet().stream().map(Map.Entry::getValue).collect(Collectors.toList());
+		List<String> acctCols = excelData.entrySet().stream().map(Map.Entry::getKey).collect(Collectors.toList());
+		String delManagers[] = acctData.get(3).split(",");
+		String removeDelMgr[] = acctData.get(2).split(",");
+		Map<String, String> actionsEditLocator = MyTeamUtils.getEntireRowOrActionsColumn(acctData.get(0), driver, ManageAccountLocators.accountTable, ManageAccountLocators.accountHeaders, "ActionsColumn");
+		Entry<String,String> actionsLocator = actionsEditLocator.entrySet().iterator().next();
+		manageAccountPage.updateAccount(actionsLocator.getValue(), acctData.get(0), acctData.get(1), acctData.get(4), delManagers, removeDelMgr);
+		
+		
+	}
+	
 	@AfterMethod
 	public void tearDown() {
-		getDriver().close();
+		login.logout(driver);
+		driver.close();
 	}
 
 }

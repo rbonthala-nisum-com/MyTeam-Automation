@@ -13,6 +13,7 @@ public class LoginPage extends Clicks {
 	/**
 	 * Constructor to get driver object.
 	 */
+	TextField enterText = new TextField(driver);
 	public LoginPage(WebDriver driver) {
 		super(driver);
 	}
@@ -40,13 +41,20 @@ public class LoginPage extends Clicks {
 	 * To enter user name text field.
 	 **/
 	public void enterUserName(WebDriver driver,String uName) {
-		new TextField(driver).userTypeIntoTextField(HomePageLocators.userNameLocator, uName, "sendKeys", waitTime30Seconds);
+		enterText.userTypeIntoTextField(HomePageLocators.userNameLocator, uName, "sendKeys", waitTime30Seconds);
 	}
 
 	/**
 	 * To enter user name text field.
 	 **/
 	public void enterPassword(WebDriver driver,String password) {
-		new TextField(driver).userTypeIntoTextField(HomePageLocators.passWordLocator, password,"sendKeys",  waitTime30Seconds);
+		enterText.userTypeIntoTextField(HomePageLocators.passWordLocator, password,"sendKeys",  waitTime30Seconds);
+	}
+	
+	public void logout(WebDriver driver) {
+		userClick(LoginPageLocators.logoutDropDown, waitTime10Seconds);
+		sleepInSeconds(2000);
+		userClick(LoginPageLocators.logoutButton, waitTime10Seconds);
+		sleepInSeconds(2000);
 	}
 }

@@ -34,5 +34,6 @@ public class WelcomePage extends Clicks {
 		login.enterUserName(driver, userName);
 		login.enterPassword(driver, passWord);
 		login.clickOnLoginButton();
+		sleepInSeconds(2000);
 	}
 }
