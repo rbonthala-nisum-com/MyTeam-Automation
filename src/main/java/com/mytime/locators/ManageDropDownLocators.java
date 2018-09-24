@@ -15,4 +15,9 @@ public class ManageDropDownLocators {
 		By dropDeliveryManager = By.xpath("//p[contains(@class,'ng-binding')and(text()='" +" "+delManager+" "+ "')]/span");
 		return dropDeliveryManager;
 	}
+	
+	public static By accountInfo(String accountInfo) {
+		By dropAccountInfoValue = By.xpath("//div[@class='md-text ng-binding'][text()='" +accountInfo+ "']");
+		return dropAccountInfoValue;
+	}
 }
