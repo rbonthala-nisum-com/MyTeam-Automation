@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mytime.database.dto.AccountDTO;
 import com.mytime.database.dto.DomainDTO;
 import com.mytime.database.dto.EmployeeDTO;
+import com.mytime.database.dto.ProjectDTO;
 
 public class MyTeamDbUtils {
 
@@ -68,6 +69,27 @@ public class MyTeamDbUtils {
 			}
 		}
 	}
+	
+	public void compareProjectWithDb(ProjectDTO prjDto, Map<String, String> uiRecord, EmployeeDTO empDto, String inputEmpIds, String dbEmpIds) {
+		
+		for(Map.Entry<String, String> pair: uiRecord.entrySet()) {
+			if(prjDto.getProjectName().equals(pair.getValue())) {
+				Assert.assertTrue(true, "ProjectName is stored in database successfully");
+				continue;
+			}
+			if(prjDto.getDomain().equals(pair.getValue())) {
+				Assert.assertTrue(true, "Domain Name is stored in database successfully");
+				continue;
+			}
+			if(compareTwoStringArrays(inputEmpIds.split(","), dbEmpIds.split(","))) {
+				Assert.assertTrue(true, "Delivery Leads are stored in database successfully");
+				continue;
+			}
+			if(prjDto.getStatus().equals(pair.getValue())) {
+				Assert.assertTrue(true, "Status is stored in database successfully");
+			}
+		}
+	}
 	public boolean compareTwoStringArrays(String[] s1, String[] s2) {
 		Boolean result = false;
 		if (s1 == null || s2 == null) {
@@ -96,8 +118,6 @@ public class MyTeamDbUtils {
 		EmployeeDTO dto = null;
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		// DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm a z");
-		// mapper.setDateFormat(df);
 		try {
 			dto = mapper.readValue(dbRecord, EmployeeDTO.class);
 		} catch (JsonParseException e) {
@@ -132,6 +152,23 @@ public class MyTeamDbUtils {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			dto = mapper.readValue(dbRecord, DomainDTO.class);
+		}catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return dto;
+	}
+	
+public ProjectDTO convertProjectJsonToJavaObject(String dbRecord, ProjectDTO dt) {
+		
+		ProjectDTO dto = null;
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		try {
+			dto = mapper.readValue(dbRecord, ProjectDTO.class);
 		}catch (JsonParseException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {

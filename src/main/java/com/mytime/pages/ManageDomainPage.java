@@ -1,11 +1,9 @@
 package com.mytime.pages;
 
-import org.eclipse.jetty.util.annotation.ManagedAttribute;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 
-import com.mytime.locators.ManageAccountLocators;
 import com.mytime.locators.ManageDomainLocators;
 import com.mytime.locators.ManageDropDownLocators;
 import com.nisum.qa.automation.components.Clicks;
@@ -27,10 +25,10 @@ public class ManageDomainPage extends Clicks{
 		userClick(ManageDomainLocators.manageDomainModule, waitTime10Seconds);
 	}
 	
-	public void addDomain(String accountInfo, String domainName, String dropDelLead[]) {
+	public void addDomain(String account, String domainName, String dropDelLead[]) {
 		userClick(ManageDomainLocators.btnAddDomain, waitTime10Seconds);
 		userClick(ManageDomainLocators.dropAccountFiled, waitTime10Seconds);
-		userClick(ManageDropDownLocators.accountInfo(accountInfo), waitTime10Seconds);
+		userClick(ManageDropDownLocators.dropDownValue(account), waitTime10Seconds);
 		enterText.userTypeIntoTextField(ManageDomainLocators.txtDomainName, domainName, "sendKeys", waitTime10Seconds);
 		userClick(ManageDomainLocators.dropDeliveryLeadField, waitTime10Seconds);
 		for(int i=0;i<dropDelLead.length;i++) {

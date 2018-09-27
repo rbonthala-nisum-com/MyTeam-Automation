@@ -9,6 +9,7 @@ import org.testng.ITestContext;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
+import com.mytime.pages.WelcomePage;
 import com.nisum.qa.automation.components.Browsers;
 import com.nisum.qa.automation.db.MongoDbConnection;
 import com.nisum.qa.automation.util.PropertiesUtils;
@@ -17,6 +18,7 @@ public class WebDriverInitialization {
 
 	protected WebDriver driver;
 	protected Logger log;
+	WelcomePage welcomePage;
 	
 	private Properties properties = PropertiesUtils.getInstance().readPropertyValue(MyTeamUtils.getPropertiesFilePath());
 	MongoDbConnection db = new MongoDbConnection();
@@ -31,10 +33,12 @@ public class WebDriverInitialization {
 
 	@BeforeClass(alwaysRun = true)
 	public void launchBrowser(ITestContext context) {
-		Browsers browser = new Browsers();
 		log = Logger.getLogger(getClass());	
+		Browsers browser = new Browsers();
 		driver = browser.launchSpecifiedBrowser(getProp().getProperty("browserName"),context);
 		driver.manage().deleteAllCookies();
+		welcomePage = new WelcomePage(driver);
+		welcomePage.navigateToMyTimeApplicationURL(getProp().getProperty("myTimeApplicationURL"));
 	}
 
 	@AfterClass(alwaysRun = true)

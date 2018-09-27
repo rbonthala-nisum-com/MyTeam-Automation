@@ -1,6 +1,7 @@
 package com.mytime.locators;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 public class ManageDropDownLocators {
 
@@ -16,8 +17,14 @@ public class ManageDropDownLocators {
 		return dropDeliveryManager;
 	}
 	
-	public static By accountInfo(String accountInfo) {
+	public static By dropDownValue(String accountInfo) {
 		By dropAccountInfoValue = By.xpath("//div[@class='md-text ng-binding'][text()='" +accountInfo+ "']");
 		return dropAccountInfoValue;
 	}
+	
+	public static By dateSelection(String date) {
+		By selectDate = By.xpath("//td[contains(@id,'"+date+"')]");
+		return selectDate;
+	}
 }
+

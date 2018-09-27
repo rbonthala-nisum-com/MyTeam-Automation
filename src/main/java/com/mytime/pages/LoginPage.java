@@ -52,9 +52,10 @@ public class LoginPage extends Clicks {
 	}
 	
 	public void logout(WebDriver driver) {
-		userClick(LoginPageLocators.logoutDropDown, waitTime10Seconds);
+		sleepInSeconds(1000);
+		userClick(LoginPageLocators.logoutDropDown, waitTime30Seconds);
 		sleepInSeconds(2000);
-		userClick(LoginPageLocators.logoutButton, waitTime10Seconds);
+		userClick(LoginPageLocators.logoutButton, waitTime30Seconds);
 		sleepInSeconds(2000);
 	}
 }
