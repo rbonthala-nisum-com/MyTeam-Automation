@@ -127,27 +127,104 @@ public class MyTeamManageAccounts extends WebDriverInitialization{
 		return result;
 	}
 	
-	
-//  @Test(priority = 1)
-//  public void addAccount() {
-//	  initLogin();
-//	 result = addOrUpdate("Account", "addAccount");
-//	  if(result) {
-//		  Assert.assertTrue(result, "Account is successfully added");
-//	  }else {
-//		  Assert.assertFalse(result, "Account is not added");
-//	  }
-//  }
-	@Test(priority = 1)
-	public void scenario1() {
-		initLogin();
-		System.out.println("frist scenario");
-	}
-  @Test(priority = 2)
-  public void scenario2() {
+  /*@Test(priority = 1)
+  public void tc001_AddAccountInManageAccountsModule() {
 	  initLogin();
-	  System.out.println("second scenario");
-  }
+	 result = addOrUpdate("Account", "addAccount");
+	  if(result) {
+		  Assert.assertTrue(result, "Account is successfully added");
+	  }else {
+		  Assert.assertFalse(result, "Account is not added");
+	  }
+  }*/
+	
+	/*@Test(priority = 2)
+	  public void tc002_UpdateAccountInManageAccountsModule() {
+		  initLogin();
+		 result = addOrUpdate("Account", "updateAccount");
+		  if(result) {
+			  Assert.assertTrue(result, "Account is successfully updated");
+		  }else {
+			  Assert.assertFalse(result, "Account is not updated");
+		  }
+	  }*/
+	
+	/*@Test(priority = 3)
+	  public void tc003_VerifyAccountNameError_Please_enter_the_account_Name() {
+		  initLogin();
+		  manageGroupPage = new ManageGroupPage(driver);
+		  manageGroupPage.clickOnManageGroupModule();
+		  manageAccountPage = new ManageAccountPage(driver);
+		  manageAccountPage.clickOnManageAccountModule();
+		 result = manageAccountPage.validateAccountNameErrMsg("Please enter the account Name");
+		  if(result) {
+			  Assert.assertTrue(result, "'Please enter the account Name' error message displayed as expected if user clicks on add button without entering the AccountName");
+		  }else {
+			  Assert.assertFalse(result, "Please enter the account Name' error message is not displayed");
+		  }
+	  }*/
+	
+	@Test(priority = 4)
+	  public void tc003_VerifyAccountNameError_Please_enter_alphabets_only() {
+		  initLogin();
+		  manageGroupPage = new ManageGroupPage(driver);
+		  manageGroupPage.clickOnManageGroupModule();
+		  manageAccountPage = new ManageAccountPage(driver);
+		  manageAccountPage.clickOnManageAccountModule();
+		 result = manageAccountPage.validateAccountNameErrMsg("Please enter alphabets only");
+		  if(result) {
+			  Assert.assertTrue(result, "'Please enter alphabets only' error message displayed as expected if user clicks on add button without entering the AccountName");
+		  }else {
+			  Assert.assertFalse(result, "Please enter alphabets only' error message is not displayed");
+		  }
+	  }
+	
+	@Test(priority = 5)
+	  public void tc003_VerifyIndTypeError_Please_enter_the_industry_type() {
+		  initLogin();
+		  manageGroupPage = new ManageGroupPage(driver);
+		  manageGroupPage.clickOnManageGroupModule();
+		  manageAccountPage = new ManageAccountPage(driver);
+		  manageAccountPage.clickOnManageAccountModule();
+		 result = manageAccountPage.validateAccountNameErrMsg("Please enter the industry type");
+		  if(result) {
+			  Assert.assertTrue(result, "'Please enter the industry type' error message displayed as expected if user clicks on add button without entering the AccountName");
+		  }else {
+			  Assert.assertFalse(result, "Please enter the industry type' error message is not displayed");
+		  }
+	  }
+	
+	@Test(priority = 6)
+	  public void tc003_VerifyClientAddrError_Please_enter_the_client_address() {
+		  initLogin();
+		  manageGroupPage = new ManageGroupPage(driver);
+		  manageGroupPage.clickOnManageGroupModule();
+		  manageAccountPage = new ManageAccountPage(driver);
+		  manageAccountPage.clickOnManageAccountModule();
+		 result = manageAccountPage.validateAccountNameErrMsg("Please enter the client address");
+		  if(result) {
+			  Assert.assertTrue(result, "'Please enter the client address' error message displayed as expected if user clicks on add button without entering the AccountName");
+		  }else {
+			  Assert.assertFalse(result, "Please enter the client address' error message is not displayed");
+		  }
+	  }
+	
+	@Test(priority = 7)
+	  public void tc003_VerifyDeliveryManagerError_Please_select_a_delivery_Manager() {
+		  initLogin();
+		  manageGroupPage = new ManageGroupPage(driver);
+		  manageGroupPage.clickOnManageGroupModule();
+		  manageAccountPage = new ManageAccountPage(driver);
+		  manageAccountPage.clickOnManageAccountModule();
+		 result = manageAccountPage.validateAccountNameErrMsg("Please select a delivery Manager");
+		  if(result) {
+			  Assert.assertTrue(result, "'Please select a delivery Manager' error message displayed as expected if user clicks on add button without entering the AccountName");
+		  }else {
+			  Assert.assertFalse(result, "Please select a delivery Manager' error message is not displayed");
+		  }
+	  }
+	
+	
   @AfterMethod
 	public void tearDown() throws InterruptedException {
 		login.logout(driver);

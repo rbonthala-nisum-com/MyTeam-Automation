@@ -32,5 +32,11 @@ public interface ManageAccountLocators {
 	By pageRefresh = By.className("fa fa-refresh");
 	By addAccountSuccessMessage = By.xpath("//*[contains(@class , 'ng-binding')and text()='Account assigned successfully']");
 	By updateAccountSuccessMessage = By.xpath("//*[contains(@class , 'ng-binding')and text()='Account updated successfully']");
+	By accountNameErrorMsg = By.xpath("//*[contains(@class , 'ng-binding')and text()='Please enter the account Name']");
+	By industryTypeErrorMsg = By.xpath("//*[contains(@class , 'ng-binding')and text()='Please enter the industry type']");
+	By clientAddressErrorMsg = By.xpath("//*[contains(@class , 'ng-binding')and text()='Please enter the client address']");
+	By deliveryMgrsErrorMsg = By.xpath("//*[contains(@class , 'ng-binding')and text()='Please select a delivery Manager']");
+	By btnCancel = By.xpath("//md-dialog-actions/button[2]");
+	By btnOkOnCancelPopUp = By.className("md-primary md-button md-default-theme md-ink-ripple");
 
 }

@@ -15,9 +15,9 @@ public class ManagePageUtils extends Clicks {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void verifySuccessMessage(String expectedMsg, By addBtnLocator, By successMsgLocator) {
+	public void verifyMessage(String expectedMsg, By addBtnLocator, By actualMsgLocator) {
 		TextField enterText = new TextField(driver);
-		String successMsg = enterText.userGetTextFromWebElement(successMsgLocator, TimeOutMethods.waitTime10Seconds);
+		String successMsg = enterText.userGetTextFromWebElement(actualMsgLocator, TimeOutMethods.waitTime10Seconds);
 		Assert.assertEquals(expectedMsg, successMsg);
 		userClick(addBtnLocator, TimeOutMethods.waitTime10Seconds);
 		sleepInSeconds(2000);

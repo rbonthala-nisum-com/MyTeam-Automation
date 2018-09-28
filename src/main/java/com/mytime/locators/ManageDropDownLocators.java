@@ -26,5 +26,10 @@ public class ManageDropDownLocators {
 		By selectDate = By.xpath("//td[contains(@id,'"+date+"')]");
 		return selectDate;
 	}
+	
+	public static By removeDelManager(String removeDelMgr) {
+		By removeDelManager = By.xpath("//p[contains(@class, 'ng-binding') and text()='"+" "+removeDelMgr+" "+"']");
+		return removeDelManager;
+	}
 }
 
