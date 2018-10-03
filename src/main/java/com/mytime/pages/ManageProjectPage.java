@@ -39,7 +39,7 @@ public class ManageProjectPage extends Clicks {
 		userClick(ManageProjectLocators.dateProjectEndDate, waitTime10Seconds);
 		userClick(ManageDropDownLocators.dateSelection(prjEndDate), waitTime10Seconds);
 		userClick(ManageProjectLocators.btnSubmitAddProject, waitTime10Seconds);
-		pageUtils.verifySuccessMessage("Project created successfully", ManageProjectLocators.btnOk, ManageProjectLocators.addProjectSuccessMessage);
+		pageUtils.verifyMessage("Project created successfully", ManageProjectLocators.btnOk, ManageProjectLocators.addProjectSuccessMessage);
 		
 	}
 	
@@ -59,7 +59,7 @@ public class ManageProjectPage extends Clicks {
 		userClick(ManageProjectLocators.dateProjectEndDate, waitTime10Seconds);
 		userClick(ManageDropDownLocators.dateSelection(prjEndDate), waitTime10Seconds);
 		userClick(ManageProjectLocators.btnSubmitAddProject, waitTime10Seconds);
-		pageUtils.verifySuccessMessage("Project updated successfully", ManageProjectLocators.btnOk, ManageProjectLocators.updateProjectSuccessMessage);
+		pageUtils.verifyMessage("Project updated successfully", ManageProjectLocators.btnOk, ManageProjectLocators.updateProjectSuccessMessage);
 		
 	}
 }

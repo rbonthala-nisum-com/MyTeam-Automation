@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 
+import com.mytime.locators.ManageAccountLocators;
 import com.mytime.locators.ManageDomainLocators;
 import com.mytime.locators.ManageDropDownLocators;
 import com.nisum.qa.automation.components.Clicks;
@@ -70,6 +71,46 @@ public class ManageDomainPage extends Clicks{
 		Assert.assertEquals("Domain updated successfully", successMsg);
 		userClick(ManageDomainLocators.btnOk, TimeOutMethods.waitTime10Seconds);
 		sleepInSeconds(2000);	
+	}
+	
+	public Boolean validateSelectAccountErrMsg(String expectedMsg) {
+		Boolean result = false;
+		userClick(ManageDomainLocators.btnAddDomain,waitTime10Seconds);
+		userClick(ManageDomainLocators.btnSubmitAdddomain, waitTime10Seconds);
+		String actualMsg = enterText.userGetTextFromWebElement(ManageDomainLocators.accoutErrMsg, waitTime10Seconds);
+		if(expectedMsg.equals(actualMsg)) {
+			Assert.assertEquals(expectedMsg, actualMsg);
+			result = true;
+		}
+		return result;
+	}
+	public Boolean validateDomainNameErrMsg(String accName,String expectedMsg) {
+		Boolean result = false;
+		userClick(ManageDomainLocators.btnAddDomain,waitTime10Seconds);
+		userClick(ManageDomainLocators.dropAccountFiled, waitTime10Seconds);
+		userClick(ManageDropDownLocators.dropDownValue(accName), waitTime10Seconds);
+		userClick(ManageDomainLocators.btnSubmitAdddomain, waitTime10Seconds);
+		String actualMsg = enterText.userGetTextFromWebElement(ManageDomainLocators.domainNameErrMsg, waitTime10Seconds);
+		if(expectedMsg.equals(actualMsg)) {
+			Assert.assertEquals(expectedMsg, actualMsg);
+			result = true;
+		}
+		return result;
+	}
+	
+	public Boolean validateDelLeadsErrMsg(String accName,String expectedMsg) {
+		Boolean result = false;
+		userClick(ManageDomainLocators.btnAddDomain,waitTime10Seconds);
+		userClick(ManageDomainLocators.dropAccountFiled, waitTime10Seconds);
+		userClick(ManageDropDownLocators.dropDownValue(accName), waitTime10Seconds);
+		enterText.userTypeIntoTextField(ManageDomainLocators.txtDomainName, "domainName", "sendKeys", waitTime10Seconds);
+		userClick(ManageDomainLocators.btnSubmitAdddomain, waitTime10Seconds);
+		String actualMsg = enterText.userGetTextFromWebElement(ManageDomainLocators.delLeadErrMsg, waitTime10Seconds);
+		if(expectedMsg.equals(actualMsg)) {
+			Assert.assertEquals(expectedMsg, actualMsg);
+			result = true;
+		}
+		return result;
 	}
 	
 }

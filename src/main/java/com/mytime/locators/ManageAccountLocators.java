@@ -33,10 +33,11 @@ public interface ManageAccountLocators {
 	By addAccountSuccessMessage = By.xpath("//*[contains(@class , 'ng-binding')and text()='Account assigned successfully']");
 	By updateAccountSuccessMessage = By.xpath("//*[contains(@class , 'ng-binding')and text()='Account updated successfully']");
 	By accountNameErrorMsg = By.xpath("//*[contains(@class , 'ng-binding')and text()='Please enter the account Name']");
+	By accountNameAlphabateErrorMsg = By.xpath("//*[contains(@class , 'ng-binding')and text()='Please enter alphabets only']");
 	By industryTypeErrorMsg = By.xpath("//*[contains(@class , 'ng-binding')and text()='Please enter the industry type']");
 	By clientAddressErrorMsg = By.xpath("//*[contains(@class , 'ng-binding')and text()='Please enter the client address']");
 	By deliveryMgrsErrorMsg = By.xpath("//*[contains(@class , 'ng-binding')and text()='Please select a delivery Manager']");
 	By btnCancel = By.xpath("//md-dialog-actions/button[2]");
-	By btnOkOnCancelPopUp = By.className("md-primary md-button md-default-theme md-ink-ripple");
+	By btnOkOnCancelPopUp = By.xpath("//md-dialog[@class='_md md-default-theme md-transition-in']/md-dialog-actions/button[2]");
 
 }

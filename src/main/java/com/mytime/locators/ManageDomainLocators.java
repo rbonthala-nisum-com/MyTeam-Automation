@@ -20,5 +20,8 @@ public interface ManageDomainLocators {
 	By domainCols = By.xpath("//div[contains(@class,'ng-binding ng-scope')]");
 	By domainColText = By.xpath("//div[@class='ui-grid-canvas']/div/div/div");
 	By domaintHeaders = By.xpath("//span[@class='ui-grid-header-cell-label ng-binding']");
+	By accoutErrMsg = By.xpath("//*[contains(@class , 'ng-binding')and text()='Please select a Account']");
+	By domainNameErrMsg = By.xpath("//*[contains(@class , 'ng-binding')and text()='Please enter a Domain Name']");
+	By delLeadErrMsg = By.xpath("//*[contains(@class , 'ng-binding')and text()='Please select a deliveryManagers']");
 	
 }
