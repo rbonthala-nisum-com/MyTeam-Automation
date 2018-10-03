@@ -163,7 +163,7 @@ public class MyTeamManageDomains extends WebDriverInitialization{
 		  }
 	  }*/
 	/*@Test(priority = 4)
-	  public void tc003_VerifyDomainNameError_Please_Select_Account() {
+	  public void tc003_Verify_DomainNameError_Please_Enter_A_Domain() {
 		  initLogin();
 		  manageGroupPage = new ManageGroupPage(driver);
 		  manageGroupPage.clickOnManageGroupModule();
@@ -178,7 +178,7 @@ public class MyTeamManageDomains extends WebDriverInitialization{
 	  }*/
 	
 	@Test(priority = 5)
-	  public void tc003_VerifyDelLeadsError_Please_Select_Account() {
+	  public void tc003_VerifyDelLeadsError_Please_Select_a_Delivery_Managers() {
 		  initLogin();
 		  manageGroupPage = new ManageGroupPage(driver);
 		  manageGroupPage.clickOnManageGroupModule();
