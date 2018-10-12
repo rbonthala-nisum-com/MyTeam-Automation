@@ -60,7 +60,6 @@ public class MyTeamLogger {
 		String logMsg = "TID: " + Thread.currentThread().getId() + " : " + getClassName() + " : " + getMethodName()
 				+ " - " + message;
 		logger.log(Level.INFO, logMsg);
-
 	}
 
 	public void warn(String message) {

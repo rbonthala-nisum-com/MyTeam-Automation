@@ -10,6 +10,11 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 
 public class DateHandler extends StdDeserializer<Date> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5748781558855100804L;
+
 	public DateHandler() {
 		this(null);
 	}

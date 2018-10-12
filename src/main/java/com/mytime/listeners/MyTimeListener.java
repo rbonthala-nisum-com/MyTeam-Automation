@@ -1,5 +1,7 @@
 package com.mytime.listeners;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -40,13 +42,18 @@ public class MyTimeListener extends TestListenerAdapter implements ISuiteListene
 
 	public void onTestFailure(ITestResult result) {
 		
-		log.error("FAILURE :   " + result.getName() + "    has failed                ");
+		//log.error("FAILURE :   " + result.getName() + "    has failed                ");
+		log.error(result.getThrowable().getMessage());
+		StringWriter sw = new StringWriter();
+		result.getThrowable().printStackTrace(new PrintWriter(sw)); 
 		ITestContext context = result.getTestContext();
 		WebDriver driver = (WebDriver) context.getAttribute("driver");
 		String screenshotName = ScreenshotHandler.getPageScreenshot(driver);
 		String screenshot = System.getProperty("user.dir") + fileSeperator + "Screenshots" + fileSeperator + screenshotName;
 		test.log(LogStatus.FAIL, result.getMethod().getMethodName() + "test is failed");
 		String file = test.addScreenCapture(".\\Screenshots" + result.getMethod().getMethodName() + ".png");
+        String stacktrace = sw.toString(); 
+        log.info(stacktrace);
 		
 	}
 

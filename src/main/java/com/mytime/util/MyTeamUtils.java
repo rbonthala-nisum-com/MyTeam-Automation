@@ -9,6 +9,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import com.mytime.database.dto.AccountDTO;
+
 public class MyTeamUtils {
 
 	private static String fileSeperator = System.getProperty("file.separator");
@@ -39,7 +41,7 @@ public class MyTeamUtils {
 	}
 
 	public static Map<String, String> getEntireRowOrActionsColumn(String accName, WebDriver driver, By accountTable, By tableHeaderNames,
-			String functionality) {
+			String functionality, String actionName) {
 
 		Map<String, String> data = new HashMap<String, String>();
 		int rowsCount;
@@ -56,17 +58,22 @@ public class MyTeamUtils {
 			accountName = Table.findElement(By.xpath("(//div[@class='ng-isolate-scope'])[" + i + "]/div[1]")).getText();
 			if (accountName.equalsIgnoreCase(accName)) {
 				List<WebElement> headers = driver.findElements(tableHeaderNames);
-				if ((functionality.replace("\\s","").trim().equalsIgnoreCase("Actions")||functionality.replace("\\s","").trim().equalsIgnoreCase("ActionsColumn"))){
+				if ((functionality.equalsIgnoreCase("Actions")||functionality.equalsIgnoreCase("ActionsColumn"))){
 					colsCount = cols.size();
 					for (int j = 1; j <= colsCount; j++) {
 						col = row.findElement(By.xpath("(//div[@class='ng-isolate-scope'])[" + i + "]/div[" + j + "]"));
 						if(j==colsCount) {
-						data.put(headers.get(j - 1).getText(),"(//div[@class='ng-isolate-scope'])[" + i + "]/div[" + j + "]");
-						break;
+							if(actionName.equalsIgnoreCase("Edit")) {
+								data.put(headers.get(j - 1).getText(),"(//div[@class='ng-isolate-scope'])[" + i + "]/div[" + j + "]"+"/p/i[2]");
+								break;
+							}else if(actionName.equalsIgnoreCase("View")) {
+								data.put(headers.get(j - 1).getText(),"(//div[@class='ng-isolate-scope'])[" + i + "]/div[" + j + "]"+"/p/i[2]");
+								break;
+							}
 						}
 					}
 				}
-				if (functionality.replace("\\s","").trim().equalsIgnoreCase("EntireRow")) {
+				if (functionality.equalsIgnoreCase("EntireRow")) {
 					for (int j = 1; j < colsCount; j++) {
 						col = row.findElement(By.xpath("(//div[@class='ng-isolate-scope'])[" + i + "]/div[" + j + "]"));
 						data.put(headers.get(j - 1).getText(), col.getText());

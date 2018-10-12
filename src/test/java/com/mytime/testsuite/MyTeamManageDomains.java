@@ -2,8 +2,8 @@ package com.mytime.testsuite;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.openqa.selenium.Cookie;
 import org.testng.Assert;
@@ -14,10 +14,8 @@ import com.mytime.database.dto.DomainDTO;
 import com.mytime.database.dto.EmployeeDTO;
 import com.mytime.locators.ManageAccountLocators;
 import com.mytime.pages.LoginPage;
-import com.mytime.pages.ManageAccountPage;
 import com.mytime.pages.ManageDomainPage;
 import com.mytime.pages.ManageGroupPage;
-import com.mytime.pages.ManageProjectPage;
 import com.mytime.pages.WelcomePage;
 import com.mytime.util.MyTeamDbUtils;
 import com.mytime.util.MyTeamUtils;
@@ -93,13 +91,13 @@ public class MyTeamManageDomains extends WebDriverInitialization{
 			dmnDto = dbUtils.convertDomainJsonToJavaObject(dbData, dmnDto);
 		}else if(functionality.equals("updateDomain")) {
 			String removeDelMgrs[] = excelAccountData.get("Remove Delivery Managers").replaceAll("\n", "").split(",");
-			Map<String, String> actionsEditLocator = MyTeamUtils.getEntireRowOrActionsColumn(excelAccountData.get("Account Name"), driver, ManageAccountLocators.accountTable, ManageAccountLocators.accountHeaders, "ActionsColumn");
+			Map<String, String> actionsEditLocator = MyTeamUtils.getEntireRowOrActionsColumn(excelAccountData.get("Account Name"), driver, ManageAccountLocators.accountTable, ManageAccountLocators.accountHeaders, "ActionsColumn","Edit");
 			Entry<String,String> actionsLocator = actionsEditLocator.entrySet().iterator().next();
 			manageDomainPage.updateDomain(actionsLocator.getValue(), excelAccountData.get("Domain Name"), addDelMgrs, removeDelMgrs);
 			dbData = getDbRecord(colNameValuePair,"Domain");
 			dmnDto = dbUtils.convertDomainJsonToJavaObject(dbData, dmnDto);
 		}
-		Map<String, String>uiData = MyTeamUtils.getEntireRowOrActionsColumn(excelAccountData.get("Domain Name"), driver,ManageAccountLocators.accountTable, ManageAccountLocators.accountHeaders,"EntireRow");
+		Map<String, String>uiData = MyTeamUtils.getEntireRowOrActionsColumn(excelAccountData.get("Domain Name"), driver,ManageAccountLocators.accountTable, ManageAccountLocators.accountHeaders,"EntireRow","");
 		String uiDelMgrs[] = uiData.get("Delivery Managers").replaceAll("\n", "").split(",");
 		String inputEmpIds = getEmpIds(addDelMgrs, empDto);
 		String dbEmpIds = getEmpIds(uiDelMgrs, empDto);

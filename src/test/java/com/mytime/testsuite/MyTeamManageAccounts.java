@@ -94,13 +94,13 @@ public class MyTeamManageAccounts extends WebDriverInitialization{
 			accDto = dbUtils.convertAccountJsonToJavaObject(dbData, accDto);
 		}else if(functionality.equals("updateAccount")) {
 			String removeDelMgrs[] = excelAccountData.get("Remove Delivery Managers").replaceAll("\n", "").split(",");
-			Map<String, String> actionsEditLocator = MyTeamUtils.getEntireRowOrActionsColumn(excelAccountData.get("Account Name"), driver, ManageAccountLocators.accountTable, ManageAccountLocators.accountHeaders, "ActionsColumn");
+			Map<String, String> actionsEditLocator = MyTeamUtils.getEntireRowOrActionsColumn(excelAccountData.get("Account Name"), driver, ManageAccountLocators.accountTable, ManageAccountLocators.accountHeaders, "ActionsColumn","Edit");
 			Entry<String,String> actionsLocator = actionsEditLocator.entrySet().iterator().next();
 			manageAccountPage.updateAccount(actionsLocator.getValue(), excelAccountData.get("Account Name"), excelAccountData.get("Industry Type"), excelAccountData.get("Client Address"), addDelMgrs, removeDelMgrs);
 			dbData = getDbRecord(colNameValuePair,"Accounts");
 			accDto = dbUtils.convertAccountJsonToJavaObject(dbData, accDto);
 		}
-		Map<String, String>uiData = MyTeamUtils.getEntireRowOrActionsColumn(excelAccountData.get("Account Name"), driver,ManageAccountLocators.accountTable, ManageAccountLocators.accountHeaders,"EntireRow");
+		Map<String, String>uiData = MyTeamUtils.getEntireRowOrActionsColumn(excelAccountData.get("Account Name"), driver,ManageAccountLocators.accountTable, ManageAccountLocators.accountHeaders,"EntireRow","");
 		String uiDelMgrs[] = uiData.get("Delivery Managers").replaceAll("\n", "").split(",");
 		String inputEmpIds = getEmpIds(addDelMgrs, empDto);
 		String dbEmpIds = getEmpIds(uiDelMgrs, empDto);

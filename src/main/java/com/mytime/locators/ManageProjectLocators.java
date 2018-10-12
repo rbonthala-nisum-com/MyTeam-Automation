@@ -13,11 +13,15 @@ public interface ManageProjectLocators {
 	By dropProjectStatus = By.id("projectStatus");
 	By dateProjectStartDate = By.xpath("//md-datepicker[@id='projectStartDate']/button");
 	By dateProjectEndDate = By.xpath("//md-datepicker[@id='projectEndDate']/button");
-	By btnSubmitAddProject = By.xpath("//button/span[text()='Add']");
-	By projectTable = By.className("ui-grid-canvas");
+	By btnSubmitAddProject = By.xpath("//md-dialog-actions/button[1]");
+	By projectTable = By.xpath("//div[@class='ui-grid-viewport ng-isolate-scope']/div");
 	By projectHeaders = By.xpath("//span[@class='ui-grid-header-cell-label ng-binding']");
 	By btnOk = By.xpath("//button[text()='Ok']");
 	By addProjectSuccessMessage = By.xpath("//*[contains(@class , 'ng-binding')and text()='Project created successfully']");
 	By updateProjectSuccessMessage = By.xpath("//*[contains(@class , 'ng-binding')and text()='Project updated successfully']");
+	By projectNameErrMsg = By.xpath("//*[contains(@class , 'ng-binding')and text()='Project Name is mandatory']");
+	By addPrjPopUpErrorMessage = By.xpath("//span[@class='error ng-binding']");
+	By btnCancelOnAddProject = By.xpath("//md-dialog-actions[@class='layout-row']/button[2]");
+	By btnOkOnCancelAlertPopUp = By.xpath("//button[contains(@class , 'md-button')and text()='ok']");
 	
 }

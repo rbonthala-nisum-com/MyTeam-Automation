@@ -23,6 +23,11 @@ public class ManageDropDownLocators {
 	}
 	
 	public static By dateSelection(String date) {
+		/*String rDt = "";
+		String d[] = date.split("-");
+		for(String dt:d) {
+			rDt += dt.replaceFirst("^0+(?!$)", "");
+		}*/
 		By selectDate = By.xpath("//td[contains(@id,'"+date+"')]");
 		return selectDate;
 	}
