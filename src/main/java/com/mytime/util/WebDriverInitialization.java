@@ -31,22 +31,20 @@ public class WebDriverInitialization {
 		this.driver = driver;
 	}
 
-	@BeforeClass(alwaysRun = true)
+	/*@BeforeClass(alwaysRun = true)
 	public void launchBrowser(ITestContext context) {
 		log = Logger.getLogger(getClass());	
 		Browsers browser = new Browsers();
 		driver = browser.launchSpecifiedBrowser(getProp().getProperty("browserName"),context);
 		driver.manage().deleteAllCookies();
-		welcomePage = new WelcomePage(driver);
-		welcomePage.navigateToMyTimeApplicationURL(getProp().getProperty("myTimeApplicationURL"));
-	}
+	}*/
 
-	@AfterClass(alwaysRun = true)
+	/*@AfterClass(alwaysRun = true)
 	public void closeBrowser() {
 		if (driver != null) {
 			driver.quit();
 		}
-	}
+	}*/
 
 	public Properties getProp() {
 		return properties;
