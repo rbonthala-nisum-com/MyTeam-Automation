@@ -4,9 +4,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 
-import com.mytime.locators.ManageAccountLocators;
 import com.mytime.locators.ManageDomainLocators;
 import com.mytime.locators.ManageDropDownLocators;
+import com.mytime.locators.MyTeamCommonLocators;
 import com.nisum.qa.automation.components.Clicks;
 import com.nisum.qa.automation.components.TextField;
 import com.nisum.qa.automation.components.TimeOutMethods;
@@ -75,41 +75,52 @@ public class ManageDomainPage extends Clicks{
 	
 	public Boolean validateSelectAccountErrMsg(String expectedMsg) {
 		Boolean result = false;
-		userClick(ManageDomainLocators.btnAddDomain,waitTime10Seconds);
+		userClick(ManageDomainLocators.btnAddDomain, TimeOutMethods.waitTime10Seconds);
 		userClick(ManageDomainLocators.btnSubmitAdddomain, waitTime10Seconds);
-		String actualMsg = enterText.userGetTextFromWebElement(ManageDomainLocators.accoutErrMsg, waitTime10Seconds);
+		String actualMsg = enterText.userGetTextFromWebElement(MyTeamCommonLocators.lblErrorMessage, waitTime10Seconds);
 		if(expectedMsg.equals(actualMsg)) {
 			Assert.assertEquals(expectedMsg, actualMsg);
 			result = true;
 		}
+		userClick(MyTeamCommonLocators.btnCancelOnPopup, waitTime10Seconds);
 		return result;
 	}
 	public Boolean validateDomainNameErrMsg(String accName,String expectedMsg) {
 		Boolean result = false;
-		userClick(ManageDomainLocators.btnAddDomain,waitTime10Seconds);
+		String actualMsg = "";
+		userClick(ManageDomainLocators.btnAddDomain, TimeOutMethods.waitTime10Seconds);
 		userClick(ManageDomainLocators.dropAccountFiled, waitTime10Seconds);
 		userClick(ManageDropDownLocators.dropDownValue(accName), waitTime10Seconds);
+		if(expectedMsg.equals("Please select a Account")) {
 		userClick(ManageDomainLocators.btnSubmitAdddomain, waitTime10Seconds);
-		String actualMsg = enterText.userGetTextFromWebElement(ManageDomainLocators.domainNameErrMsg, waitTime10Seconds);
+		actualMsg = enterText.userGetTextFromWebElement(MyTeamCommonLocators.lblErrorMessage, waitTime10Seconds);
+		}else if(expectedMsg.equals("Please enter alphabets only")) {
+			userClick(ManageDomainLocators.btnSubmitAdddomain, waitTime10Seconds);
+			actualMsg = enterText.userGetTextFromWebElement(MyTeamCommonLocators.lblErrorMessage, waitTime10Seconds);
+		}
 		if(expectedMsg.equals(actualMsg)) {
 			Assert.assertEquals(expectedMsg, actualMsg);
 			result = true;
 		}
+		userClick(MyTeamCommonLocators.btnCancelOnPopup, waitTime10Seconds);
+		userClick(MyTeamCommonLocators.btnOkOnAlertPopUp, waitTime10Seconds);
 		return result;
 	}
 	
-	public Boolean validateDelLeadsErrMsg(String accName,String expectedMsg) {
+	public Boolean validateDelLeadsErrMsg(String accName, String expectedMsg) {
 		Boolean result = false;
-		userClick(ManageDomainLocators.btnAddDomain,waitTime10Seconds);
+		userClick(ManageDomainLocators.btnAddDomain, TimeOutMethods.waitTime10Seconds);
 		userClick(ManageDomainLocators.dropAccountFiled, waitTime10Seconds);
 		userClick(ManageDropDownLocators.dropDownValue(accName), waitTime10Seconds);
 		enterText.userTypeIntoTextField(ManageDomainLocators.txtDomainName, "domainName", "sendKeys", waitTime10Seconds);
 		userClick(ManageDomainLocators.btnSubmitAdddomain, waitTime10Seconds);
-		String actualMsg = enterText.userGetTextFromWebElement(ManageDomainLocators.delLeadErrMsg, waitTime10Seconds);
+		String actualMsg = enterText.userGetTextFromWebElement(MyTeamCommonLocators.lblErrorMessage, waitTime10Seconds);
 		if(expectedMsg.equals(actualMsg)) {
 			Assert.assertEquals(expectedMsg, actualMsg);
 			result = true;
 		}
+		userClick(MyTeamCommonLocators.btnCancelOnPopup, waitTime10Seconds);
+		userClick(MyTeamCommonLocators.btnOkOnAlertPopUp, waitTime10Seconds);
 		return result;
 	}
 	

@@ -3,10 +3,10 @@ package com.mytime.testsuite;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
-import org.openqa.selenium.Cookie;
+import org.apache.log4j.Logger;
 import org.testng.Assert;
+import org.testng.ITestContext;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -21,6 +21,7 @@ import com.mytime.pages.WelcomePage;
 import com.mytime.util.MyTeamDbUtils;
 import com.mytime.util.MyTeamUtils;
 import com.mytime.util.WebDriverInitialization;
+import com.nisum.qa.automation.components.Browsers;
 import com.nisum.qa.automation.util.ExcelUtils;
 
 public class MyTeamManageAccounts extends WebDriverInitialization{
@@ -35,15 +36,20 @@ public class MyTeamManageAccounts extends WebDriverInitialization{
 	AccountDTO accDto;
 	EmployeeDTO empDto;
 	
+	private Map<String, String> readDataFromExcel(String functionality){
+		Map<String, String> excelData = ExcelUtils.getCellData(MyTeamUtils.getExcelPath(), functionality);
+		return excelData;
+	}
+	
 	@BeforeMethod
-	public void setUp() {
-		//welcomePage = new WelcomePage(driver);
-		Set<Cookie> allCookies = driver.manage().getCookies();
-		for (Cookie cookie : allCookies) {
-		    driver.manage().deleteCookieNamed(cookie.getName());
-		}
+	public void setUp(ITestContext context) {
+		log = Logger.getLogger(getClass());	
+		Browsers browser = new Browsers();
+		driver = browser.launchSpecifiedBrowser(getProp().getProperty("browserName"),context);
+		driver.manage().deleteAllCookies();
+		welcomePage = new WelcomePage(driver);
+		welcomePage.navigateToMyTimeApplicationURL(getProp().getProperty("myTimeApplicationURL"));
 		login = new LoginPage(getDriver());
-		//welcomePage.navigateToMyTimeApplicationURL(getProp().getProperty("myTimeApplicationURL"));
 		log.info("Before Method");
 	}
 	
@@ -94,13 +100,13 @@ public class MyTeamManageAccounts extends WebDriverInitialization{
 			accDto = dbUtils.convertAccountJsonToJavaObject(dbData, accDto);
 		}else if(functionality.equals("updateAccount")) {
 			String removeDelMgrs[] = excelAccountData.get("Remove Delivery Managers").replaceAll("\n", "").split(",");
-			Map<String, String> actionsEditLocator = MyTeamUtils.getEntireRowOrActionsColumn(excelAccountData.get("Account Name"), driver, ManageAccountLocators.accountTable, ManageAccountLocators.accountHeaders, "ActionsColumn","Edit");
+			Map<String, String> actionsEditLocator = MyTeamUtils.getEntireRowOrActionsColumn(excelAccountData.get("Account Name"), driver, ManageAccountLocators.accountTable, ManageAccountLocators.accountHeaders, "ActionsColumn","updateAccount");
 			Entry<String,String> actionsLocator = actionsEditLocator.entrySet().iterator().next();
 			manageAccountPage.updateAccount(actionsLocator.getValue(), excelAccountData.get("Account Name"), excelAccountData.get("Industry Type"), excelAccountData.get("Client Address"), addDelMgrs, removeDelMgrs);
 			dbData = getDbRecord(colNameValuePair,"Accounts");
 			accDto = dbUtils.convertAccountJsonToJavaObject(dbData, accDto);
 		}
-		Map<String, String>uiData = MyTeamUtils.getEntireRowOrActionsColumn(excelAccountData.get("Account Name"), driver,ManageAccountLocators.accountTable, ManageAccountLocators.accountHeaders,"EntireRow","");
+		Map<String, String>uiData = MyTeamUtils.getEntireRowOrActionsColumn(excelAccountData.get("Account Name"), driver,ManageAccountLocators.accountTable, ManageAccountLocators.accountHeaders,"EntireRow","Account");
 		String uiDelMgrs[] = uiData.get("Delivery Managers").replaceAll("\n", "").split(",");
 		String inputEmpIds = getEmpIds(addDelMgrs, empDto);
 		String dbEmpIds = getEmpIds(uiDelMgrs, empDto);
@@ -127,7 +133,7 @@ public class MyTeamManageAccounts extends WebDriverInitialization{
 		return result;
 	}
 	
-  @Test(priority = 1)
+ /* @Test(priority = 1)
   public void tc001_AddAccountInManageAccountsModule() {
 	  initLogin();
 	 result = addOrUpdate("Account", "addAccount");
@@ -136,9 +142,9 @@ public class MyTeamManageAccounts extends WebDriverInitialization{
 	  }else {
 		  Assert.assertFalse(result, "Account is not added");
 	  }
-  }
+  }*/
 	
-	/*@Test(priority = 2)
+	@Test(priority = 2)
 	  public void tc002_UpdateAccountInManageAccountsModule() {
 		  initLogin();
 		 result = addOrUpdate("Account", "updateAccount");
@@ -147,7 +153,7 @@ public class MyTeamManageAccounts extends WebDriverInitialization{
 		  }else {
 			  Assert.assertFalse(result, "Account is not updated");
 		  }
-	  }*/
+	  }
 	
 	/*@Test(priority = 3)
 	  public void tc003_VerifyAccountNameError_Please_enter_the_account_Name() {
@@ -162,9 +168,9 @@ public class MyTeamManageAccounts extends WebDriverInitialization{
 		  }else {
 			  Assert.assertFalse(result, "Please enter the account Name' error message is not displayed");
 		  }
-	  }*/
+	  }
 	
-	/*@Test(priority = 4)
+	@Test(priority = 3)
 	  public void tc003_VerifyAccountNameError_Please_enter_alphabets_only() {
 		  initLogin();
 		  manageGroupPage = new ManageGroupPage(driver);
@@ -177,46 +183,48 @@ public class MyTeamManageAccounts extends WebDriverInitialization{
 		  }else {
 			  Assert.assertFalse(result, "Please enter alphabets only' error message is not displayed");
 		  }
-	  }*/
+	  }
 	
-	/*@Test(priority = 5)
-	  public void tc003_VerifyIndTypeError_Please_enter_the_industry_type() {
+	@Test(priority = 4)
+	  public void tc004_VerifyIndTypeError_Please_enter_the_industry_type() {
 		  initLogin();
 		  manageGroupPage = new ManageGroupPage(driver);
 		  manageGroupPage.clickOnManageGroupModule();
 		  manageAccountPage = new ManageAccountPage(driver);
 		  manageAccountPage.clickOnManageAccountModule();
-		 result = manageAccountPage.validateAccountNameErrMsg("Please enter the industry type");
+		 result = manageAccountPage.validateIndTypeErrMsg("Please enter the industry type");
 		  if(result) {
 			  Assert.assertTrue(result, "'Please enter the industry type' error message displayed as expected if user clicks on add button without entering the AccountName");
 		  }else {
 			  Assert.assertFalse(result, "Please enter the industry type' error message is not displayed");
 		  }
-	  }*/
+	  }
 	
-	/*@Test(priority = 6)
-	  public void tc003_VerifyClientAddrError_Please_enter_the_client_address() {
+	@Test(priority = 5)
+	  public void tc005_VerifyClientAddrError_Please_enter_the_client_address() {
 		  initLogin();
 		  manageGroupPage = new ManageGroupPage(driver);
 		  manageGroupPage.clickOnManageGroupModule();
 		  manageAccountPage = new ManageAccountPage(driver);
 		  manageAccountPage.clickOnManageAccountModule();
-		 result = manageAccountPage.validateClientAddrErrMsg("Please enter the client address");
+		  Map<String, String> excelData = readDataFromExcel("addAccount");
+		 result = manageAccountPage.validateClientAddrErrMsg(excelData.get("Industry Type"), "Please enter the client address");
 		  if(result) {
 			  Assert.assertTrue(result, "'Please enter the client address' error message displayed as expected if user clicks on add button without entering the AccountName");
 		  }else {
 			  Assert.assertFalse(result, "Please enter the client address' error message is not displayed");
 		  }
-	  }*/
+	  }
 	
-	/*@Test(priority = 7)
-	  public void tc003_VerifyDeliveryManagerError_Please_select_a_delivery_Manager() {
+	@Test(priority = 6)
+	  public void tc006_VerifyDeliveryManagerError_Please_select_a_delivery_Manager() {
 		  initLogin();
 		  manageGroupPage = new ManageGroupPage(driver);
 		  manageGroupPage.clickOnManageGroupModule();
 		  manageAccountPage = new ManageAccountPage(driver);
 		  manageAccountPage.clickOnManageAccountModule();
-		 result = manageAccountPage.validateDelMgrsErrMsg("Please select a delivery Manager");
+		  Map<String, String> excelData = readDataFromExcel("addAccount");
+		 result = manageAccountPage.validateDelMgrsErrMsg(excelData.get("Industry Type"), "Please select a delivery Manager");
 		  if(result) {
 			  Assert.assertTrue(result, "'Please select a delivery Manager' error message displayed as expected if user clicks on add button without entering the AccountName");
 		  }else {
@@ -225,9 +233,11 @@ public class MyTeamManageAccounts extends WebDriverInitialization{
 	  }*/
 	
   @AfterMethod
-	public void tearDown() throws InterruptedException {
+  public void tearDown() {
 		login.logout(driver);
 		driver.manage().deleteAllCookies();
-		Thread.sleep(5000);
+		if (driver != null) {
+			driver.quit();
+		}
 	}
 }

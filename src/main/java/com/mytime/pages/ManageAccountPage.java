@@ -6,6 +6,7 @@ import org.testng.Assert;
 
 import com.mytime.locators.ManageAccountLocators;
 import com.mytime.locators.ManageDropDownLocators;
+import com.mytime.locators.MyTeamCommonLocators;
 import com.mytime.util.ManagePageUtils;
 import com.nisum.qa.automation.components.Clicks;
 import com.nisum.qa.automation.components.TextField;
@@ -84,21 +85,20 @@ public class ManageAccountPage extends Clicks {
 	public Boolean validateAccountNameErrMsg(String expectedMsg) {
 		Boolean result = false;
 		userClick(ManageAccountLocators.btnAddAccount, TimeOutMethods.waitTime10Seconds);
-		sleepInSeconds(1000);
 		if(expectedMsg.equals("Please enter the account Name")) {
 			userClick(ManageAccountLocators.btnSubmitAddAccount, waitTime10Seconds);
-			String actualMsg = enterText.userGetTextFromWebElement(ManageAccountLocators.accountNameErrorMsg, waitTime10Seconds);
+			String actualMsg = enterText.userGetTextFromWebElement(MyTeamCommonLocators.lblErrorMessage, waitTime10Seconds);
 			Assert.assertEquals(expectedMsg, actualMsg);
-			userClick(ManageAccountLocators.btnCancel, waitTime10Seconds);
 			result = true;
+			userClick(MyTeamCommonLocators.btnCancelOnPopup, TimeOutMethods.waitTime10Seconds);
 		}else if(expectedMsg.equals("Please enter alphabets only")) {
 			enterText.userTypeIntoTextField(ManageAccountLocators.txtAccountName, "123", "sendKeys",TimeOutMethods.waitTime10Seconds);
 			userClick(ManageAccountLocators.btnSubmitAddAccount, waitTime10Seconds);
-			String actualMsg = enterText.userGetTextFromWebElement(ManageAccountLocators.accountNameAlphabateErrorMsg, waitTime10Seconds);
+			String actualMsg = enterText.userGetTextFromWebElement(MyTeamCommonLocators.lblErrorMessage, waitTime10Seconds);
 			Assert.assertEquals(expectedMsg, actualMsg);
-			userClick(ManageAccountLocators.btnCancel, waitTime10Seconds);
-			userClick(ManageAccountLocators.btnOkOnCancelPopUp, waitTime10Seconds);
+			enterText.userTypeIntoTextField(ManageAccountLocators.txtAccountName, "", "clearText",TimeOutMethods.waitTime10Seconds);
 			result = true;
+			userClick(MyTeamCommonLocators.btnCancelOnPopup, TimeOutMethods.waitTime10Seconds);
 		}
 		return result;
 	}
@@ -106,52 +106,49 @@ public class ManageAccountPage extends Clicks {
 	public Boolean validateIndTypeErrMsg(String expectedMsg) {
 		Boolean result = false;
 		userClick(ManageAccountLocators.btnAddAccount, TimeOutMethods.waitTime10Seconds);
-		sleepInSeconds(1000);
 		enterText.userTypeIntoTextField(ManageAccountLocators.txtAccountName, "TestAccount", "sendKeys",TimeOutMethods.waitTime10Seconds);
 		userClick(ManageAccountLocators.btnSubmitAddAccount, waitTime10Seconds);
-		String actualMsg = enterText.userGetTextFromWebElement(ManageAccountLocators.industryTypeErrorMsg, waitTime10Seconds);
+		String actualMsg = enterText.userGetTextFromWebElement(MyTeamCommonLocators.lblErrorMessage, waitTime10Seconds);
 		if(expectedMsg.equals(actualMsg)) {
 			Assert.assertEquals(expectedMsg, actualMsg);
 			result = true;
+			userClick(MyTeamCommonLocators.btnCancelOnPopup, TimeOutMethods.waitTime10Seconds);
+			userClick(MyTeamCommonLocators.btnOkOnAlertPopUp, TimeOutMethods.waitTime10Seconds);
 		}
-		userClick(ManageAccountLocators.btnCancel, waitTime10Seconds);
-		userClick(ManageAccountLocators.btnOkOnCancelPopUp, waitTime10Seconds);
 		return result;
 	}
 	
-	public Boolean validateClientAddrErrMsg(String expectedMsg) {
+	public Boolean validateClientAddrErrMsg(String industryType, String expectedMsg) {
 		Boolean result = false;
 		userClick(ManageAccountLocators.btnAddAccount, TimeOutMethods.waitTime10Seconds);
-		sleepInSeconds(1000);
-		enterText.userTypeIntoTextField(ManageAccountLocators.txtAccountName, "TestAccount", "sendKeys",TimeOutMethods.waitTime10Seconds);
+		enterText.userTypeIntoTextField(ManageAccountLocators.txtAccountName, "accountName", "sendKeys",TimeOutMethods.waitTime10Seconds);
 		userClick(ManageAccountLocators.dropIndustryTypeFiled, TimeOutMethods.waitTime10Seconds);
-		userClick(ManageDropDownLocators.industryType("Retail"), TimeOutMethods.waitTime10Seconds);
+		userClick(ManageDropDownLocators.industryType(industryType), TimeOutMethods.waitTime10Seconds);
 		userClick(ManageAccountLocators.btnSubmitAddAccount, waitTime10Seconds);
-		String actualMsg = enterText.userGetTextFromWebElement(ManageAccountLocators.clientAddressErrorMsg, waitTime10Seconds);
+		String actualMsg = enterText.userGetTextFromWebElement(MyTeamCommonLocators.lblErrorMessage, waitTime10Seconds);
 		if(expectedMsg.equals(actualMsg)) {
 			Assert.assertEquals(expectedMsg, actualMsg);
 			result = true;
+			userClick(MyTeamCommonLocators.btnCancelOnPopup, TimeOutMethods.waitTime10Seconds);
+			userClick(MyTeamCommonLocators.btnOkOnAlertPopUp, TimeOutMethods.waitTime10Seconds);
 		}
-		userClick(ManageAccountLocators.btnCancel, waitTime10Seconds);
-		userClick(ManageAccountLocators.btnOkOnCancelPopUp, waitTime10Seconds);
 		return result;
 	}
-	public Boolean validateDelMgrsErrMsg(String expectedMsg) {
+	public Boolean validateDelMgrsErrMsg(String industryType, String expectedMsg) {
 		Boolean result = false;
 		userClick(ManageAccountLocators.btnAddAccount, TimeOutMethods.waitTime10Seconds);
-		sleepInSeconds(1000);
-		enterText.userTypeIntoTextField(ManageAccountLocators.txtAccountName, "TestAccount", "sendKeys",TimeOutMethods.waitTime10Seconds);
+		enterText.userTypeIntoTextField(ManageAccountLocators.txtAccountName, "accountName", "sendKeys",TimeOutMethods.waitTime10Seconds);
 		userClick(ManageAccountLocators.dropIndustryTypeFiled, TimeOutMethods.waitTime10Seconds);
-		userClick(ManageDropDownLocators.industryType("Retail"), TimeOutMethods.waitTime10Seconds);
+		userClick(ManageDropDownLocators.industryType(industryType), TimeOutMethods.waitTime10Seconds);
 		enterText.userTypeIntoTextField(ManageAccountLocators.txtClientAddress,"Address","sendKeys",TimeOutMethods.waitTime10Seconds);
 		userClick(ManageAccountLocators.btnSubmitAddAccount, waitTime10Seconds);
-		String actualMsg = enterText.userGetTextFromWebElement(ManageAccountLocators.deliveryMgrsErrorMsg, waitTime10Seconds);
+		String actualMsg = enterText.userGetTextFromWebElement(MyTeamCommonLocators.lblErrorMessage, waitTime10Seconds);
 		if(expectedMsg.equals(actualMsg)) {
 			Assert.assertEquals(expectedMsg, actualMsg);
 			result = true;
+			userClick(MyTeamCommonLocators.btnCancelOnPopup, TimeOutMethods.waitTime10Seconds);
+			userClick(MyTeamCommonLocators.btnOkOnAlertPopUp, TimeOutMethods.waitTime10Seconds);
 		}
-		userClick(ManageAccountLocators.btnCancel, waitTime10Seconds);
-		userClick(ManageAccountLocators.btnOkOnCancelPopUp, waitTime10Seconds);
 		return result;
 	}
 }

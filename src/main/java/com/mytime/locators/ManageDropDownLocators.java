@@ -17,9 +17,14 @@ public class ManageDropDownLocators {
 		return dropDeliveryManager;
 	}
 	
-	public static By dropDownValue(String accountInfo) {
-		By dropAccountInfoValue = By.xpath("//div[@class='md-text ng-binding'][text()='" +accountInfo+ "']");
+	public static By dropDownValue(String dropValueToSelect) {
+		By dropAccountInfoValue = By.xpath("//div[@class='md-text ng-binding'][text()='"+dropValueToSelect+"']");
 		return dropAccountInfoValue;
+	}
+	
+	public static By dropDownValue2(String dropValueToSelect) {
+		By dropSelectValue = By.xpath("//div[@class='md-select-menu-container md-active md-clickable']/md-select-menu/md-content/md-optgroup/md-option/div[text()='"+dropValueToSelect+"']");
+		return dropSelectValue;
 	}
 	
 	public static By dateSelection(String date) {
@@ -36,5 +41,6 @@ public class ManageDropDownLocators {
 		By removeDelManager = By.xpath("//p[contains(@class, 'ng-binding') and text()='"+" "+removeDelMgr+" "+"']");
 		return removeDelManager;
 	}
+
 }
 

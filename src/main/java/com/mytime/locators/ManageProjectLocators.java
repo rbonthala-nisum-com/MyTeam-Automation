@@ -23,5 +23,7 @@ public interface ManageProjectLocators {
 	By addPrjPopUpErrorMessage = By.xpath("//span[@class='error ng-binding']");
 	By btnCancelOnAddProject = By.xpath("//md-dialog-actions[@class='layout-row']/button[2]");
 	By btnOkOnCancelAlertPopUp = By.xpath("//button[contains(@class , 'md-button')and text()='ok']");
+	By txtPrjEndDate = By.xpath("//md-datepicker[@id='projectEndDate']/div[1]/input");
+	By txtPrjStartDate = By.xpath("//md-datepicker[@id='projectStartDate']/div[1]/input");
 	
 }

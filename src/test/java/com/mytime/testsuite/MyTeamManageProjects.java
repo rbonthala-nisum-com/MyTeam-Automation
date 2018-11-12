@@ -3,10 +3,11 @@ package com.mytime.testsuite;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
-import org.openqa.selenium.Cookie;
+import org.apache.log4j.Logger;
 import org.testng.Assert;
+import org.testng.ITestContext;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -20,8 +21,7 @@ import com.mytime.pages.WelcomePage;
 import com.mytime.util.MyTeamDbUtils;
 import com.mytime.util.MyTeamUtils;
 import com.mytime.util.WebDriverInitialization;
-import com.nisum.qa.automation.components.Clicks;
-import com.nisum.qa.automation.components.TimeOutMethods;
+import com.nisum.qa.automation.components.Browsers;
 import com.nisum.qa.automation.util.ExcelUtils;
 
 public class MyTeamManageProjects extends WebDriverInitialization{
@@ -37,14 +37,14 @@ public class MyTeamManageProjects extends WebDriverInitialization{
 	EmployeeDTO empDto;
 	
 	@BeforeMethod
-	public void setUp() {
-		//welcomePage = new WelcomePage(driver);
-		Set<Cookie> allCookies = driver.manage().getCookies();
-		for (Cookie cookie : allCookies) {
-		    driver.manage().deleteCookieNamed(cookie.getName());
-		}
+	public void setUp(ITestContext context) {
+		log = Logger.getLogger(getClass());	
+		Browsers browser = new Browsers();
+		driver = browser.launchSpecifiedBrowser(getProp().getProperty("browserName"),context);
+		driver.manage().deleteAllCookies();
+		welcomePage = new WelcomePage(driver);
+		welcomePage.navigateToMyTimeApplicationURL(getProp().getProperty("myTimeApplicationURL"));
 		login = new LoginPage(getDriver());
-		//welcomePage.navigateToMyTimeApplicationURL(getProp().getProperty("myTimeApplicationURL"));
 		log.info("Before Method");
 	}
 	
@@ -131,7 +131,7 @@ public class MyTeamManageProjects extends WebDriverInitialization{
 		return result;
 	}
 	
-	/*@Test(priority = 1)
+	@Test(priority = 1)
 	  public void tc001_AddProjectInManageProjectsModule() {
 		  initLogin();
 		 result = addOrUpdate("Project", "addProject");
@@ -140,10 +140,10 @@ public class MyTeamManageProjects extends WebDriverInitialization{
 		  }else {
 			  Assert.assertFalse(result, "Project is not added");
 		  }
-	  }*/
+	  }
 	
-	/*@Test(priority = 2)
-	  public void tc001_UpdateProjectInManageProjectsModule() {
+	@Test(priority = 2)
+	  public void tc002_UpdateProjectInManageProjectsModule() {
 		  initLogin();
 		 result = addOrUpdate("Project", "updateProject");
 		  if(result) {
@@ -151,46 +151,170 @@ public class MyTeamManageProjects extends WebDriverInitialization{
 		  }else {
 			  Assert.assertFalse(result, "Project is not updated");
 		  }
-	  }*/
+	  }
 	
-	@Test(priority = 10)
-	public void tc003_Verify_All_Error_Messages() {
+	@Test(priority = 3)
+	  public void tc003_VerifyProjectNameError_Please_enter_the_account_Name() {
+		  initLogin();
+		  manageGroupPage = new ManageGroupPage(driver);
+		  manageGroupPage.clickOnManageGroupModule();
+		  manageProjectPage = new ManageProjectPage(driver);
+		  manageProjectPage.clickOnManageProjectModule();
+		 result = manageProjectPage.validateProjectNameErrMsg("Project Name is mandatory");
+		  if(result) {
+			  Assert.assertTrue(result, "'Please enter the account Name' error message displayed as expected if user clicks on add button without entering the AccountName");
+		  }else {
+			  Assert.assertFalse(result, "Please enter the account Name' error message is not displayed");
+		  }
+	  }
+	
+	@Test(priority = 4)
+	  public void tc004_VerifyProjectNameError_Please_enter_alphabets_only() {
+		  initLogin();
+		  manageGroupPage = new ManageGroupPage(driver);
+		  manageGroupPage.clickOnManageGroupModule();
+		  manageProjectPage = new ManageProjectPage(driver);
+		  manageProjectPage.clickOnManageProjectModule();
+		 result = manageProjectPage.validateProjectNameErrMsg("Please enter alphabets only");
+		  if(result) {
+			  Assert.assertTrue(result, "'Please enter alphabets only' error message displayed as expected if user clicks on add button without entering the AccountName");
+		  }else {
+			  Assert.assertFalse(result, "Please enter alphabets only' error message is not displayed");
+		  }
+	  }
+	
+	@Test(priority = 5)
+	public void tc005_VerifyErrorMessage_Account_is_mandatory() {
+		Boolean result = false;
 		initLogin();
-		Clicks click = new Clicks(driver);
+		manageGroupPage = new ManageGroupPage(driver);
+		manageGroupPage.clickOnManageGroupModule();
+		manageProjectPage = new ManageProjectPage(driver);
+		manageProjectPage.clickOnManageProjectModule();
+		result = manageProjectPage.validateSelectAccountErrMsg("Account is mandatory");
+		if (result) {
+			Assert.assertTrue(result, "'Account is mandatory' error message displayed as expected");
+		} else {
+			Assert.assertFalse(result, "Account is mandatory' error message is not displayed");
+		}
+
+	}
+
+	@Test(priority = 6)
+	public void tc006_VerifyErrorMessage_Domain_is_mandatory() {
+		Boolean result = false;
+		initLogin();
 		manageGroupPage = new ManageGroupPage(driver);
 		manageGroupPage.clickOnManageGroupModule();
 		manageProjectPage = new ManageProjectPage(driver);
 		manageProjectPage.clickOnManageProjectModule();
 		Map<String, String> excelData = readDataFromExcel("addProject");
-		String errors[] = { "Project Name is mandatory", "Please enter alphabets only", "Account is mandatory",
-				"Domain is mandatory", "Please select a Delivery Lead", "Please select a Project Status",
-				"Please select project start date", "Please select project end date" };
-		click.userClick(ManageProjectLocators.btnAddProject, TimeOutMethods.waitTime10Seconds);
-		
-		for (String err : errors) {
-			
-			if (err.equals("Project Name is mandatory")) {
-				result = manageProjectPage.validateProjectNameErrMsg("Project Name is mandatory");
-			}else if(err.equals("Please enter alphabets only")) {
-				result = manageProjectPage.validateProjectNameErrMsg("Please enter alphabets only");
-			}else if(err.equals("Account is mandatory")) {
-				result = manageProjectPage.validateSelectAccountErrMsg("Account is mandatory");
-			}else if(err.equals("Domain is mandatory")) {
-				result = manageProjectPage.validateSelectDomainErrMsg("Domain is mandatory", excelData.get("Account"));
-			}else if(err.equals("Please select a Delivery Lead")) {
-				result = manageProjectPage.validateSelectDelLeadErrMsg("Please select a Delivery Lead", excelData.get("Domain"));
-			}else if(err.equals("Please select a Project Status")) {
-				result = manageProjectPage.validateSelectPrjStatusErrMsg("Please select a Project Status", excelData.get("Delivery Lead"));
-			}else if(err.equalsIgnoreCase("Please select project start date")) {
-				result = manageProjectPage.validateSelectPrjStartDateErrMsg("Please select project start date", excelData.get("Project Status"), "2018-10-1","2018-11-1");
-			}else if(err.equals("Please select project end date")) {
-				result = manageProjectPage.validateSelectPrjEndDateErrMsg("Please select project end date", excelData.get("Project Start Date"));
-			}
-			
+		result = manageProjectPage.validateSelectDomainErrMsg("Domain is mandatory", excelData.get("Account"));
+		if (result) {
+			Assert.assertTrue(result, "'Domain is mandatory' error message displayed as expected");
+		} else {
+			Assert.assertFalse(result, "Domain is mandatory' error message is not displayed");
 		}
-		click.userClick(ManageProjectLocators.btnCancelOnAddProject, TimeOutMethods.waitTime10Seconds);
-		click.userClick(ManageProjectLocators.btnOkOnCancelAlertPopUp, TimeOutMethods.waitTime10Seconds);
-		
+
 	}
+	
+	@Test(priority = 7)
+	public void tc007_VerifyErrorMessage_Please_select_a_Delivery_Lead() {
+		Boolean result = false;
+		initLogin();
+		manageGroupPage = new ManageGroupPage(driver);
+		manageGroupPage.clickOnManageGroupModule();
+		manageProjectPage = new ManageProjectPage(driver);
+		manageProjectPage.clickOnManageProjectModule();
+		Map<String, String> excelData = readDataFromExcel("addProject");
+		result = manageProjectPage.validateSelectDelLeadErrMsg("Please select a Delivery Lead", excelData.get("Account"), excelData.get("Domain"));
+		if (result) {
+			Assert.assertTrue(result, "'Please select a Delivery Lead' error message displayed as expected");
+		} else {
+			Assert.assertFalse(result, "Please select a Delivery Lead' error message is not displayed");
+		}
+
+	}
+	
+	@Test(priority = 8)
+	public void tc008_VerifyErrorMessage_Please_select_a_Project_Status() {
+		Boolean result = false;
+		initLogin();
+		manageGroupPage = new ManageGroupPage(driver);
+		manageGroupPage.clickOnManageGroupModule();
+		manageProjectPage = new ManageProjectPage(driver);
+		manageProjectPage.clickOnManageProjectModule();
+		Map<String, String> excelData = readDataFromExcel("addProject");
+		result = manageProjectPage.validateSelectPrjStatusErrMsg("Please select a Project Status", excelData.get("Account"), excelData.get("Domain"), excelData.get("Delivery Lead"));
+		if (result) {
+			Assert.assertTrue(result, "'Please select a Project Status' error message displayed as expected");
+		} else {
+			Assert.assertFalse(result, "Please select a Project Status' error message is not displayed");
+		}
+
+	}
+	
+	@Test(priority = 9)
+	public void tc009_VerifyErrorMessage_Please_select_project_start_date() {
+		Boolean result = false;
+		initLogin();
+		manageGroupPage = new ManageGroupPage(driver);
+		manageGroupPage.clickOnManageGroupModule();
+		manageProjectPage = new ManageProjectPage(driver);
+		manageProjectPage.clickOnManageProjectModule();
+		Map<String, String> excelData = readDataFromExcel("addProject");
+		result = manageProjectPage.validateSelectPrjStartDateErrMsg("Please select project start date", excelData.get("Account"), excelData.get("Domain"), excelData.get("Delivery Lead"), excelData.get("Project Status"), MyTeamUtils.getCurrentDate(), MyTeamUtils.getCurrentDate()+1);
+		if (result) {
+			Assert.assertTrue(result, "'Please select project start date' error message displayed as expected");
+		} else {
+			Assert.assertFalse(result, "Please select project start date' error message is not displayed");
+		}
+
+	}
+	
+	@Test(priority = 10)
+	public void tc010_VerifyErrorMessage_Start_date_should_not_Be_greater_than_end_date() {
+		Boolean result = false;
+		initLogin();
+		manageGroupPage = new ManageGroupPage(driver);
+		manageGroupPage.clickOnManageGroupModule();
+		manageProjectPage = new ManageProjectPage(driver);
+		manageProjectPage.clickOnManageProjectModule();
+		Map<String, String> excelData = readDataFromExcel("addProject");
+		result = manageProjectPage.validateSelectPrjStartDateErrMsg("Start date should not be greater than end date", excelData.get("Account"), excelData.get("Domain"), excelData.get("Delivery Lead"), excelData.get("Project Status"), MyTeamUtils.getFutureDate(), MyTeamUtils.getCurrentDate());
+		if (result) {
+			Assert.assertTrue(result, "'Start date should not be greater than end date' error message displayed as expected");
+		} else {
+			Assert.assertFalse(result, "Start date should not be greater than end date' error message is not displayed");
+		}
+
+	}
+	
+	@Test(priority = 11)
+	public void tc011_VerifyErrorMessage_Please_select_project_end_date() {
+		Boolean result = false;
+		initLogin();
+		manageGroupPage = new ManageGroupPage(driver);
+		manageGroupPage.clickOnManageGroupModule();
+		manageProjectPage = new ManageProjectPage(driver);
+		manageProjectPage.clickOnManageProjectModule();
+		Map<String, String> excelData = readDataFromExcel("addProject");
+		result = manageProjectPage.validateSelectPrjEndDateErrMsg("Please select project end date", excelData.get("Account"), excelData.get("Domain"), excelData.get("Delivery Lead"), excelData.get("Project Status"), MyTeamUtils.getFutureDate());
+		if (result) {
+			Assert.assertTrue(result, "'Please select project end date' error message displayed as expected");
+		} else {
+			Assert.assertFalse(result, "Please select project end date' error message is not displayed");
+		}
+
+	}
+		
+	 @AfterMethod
+	 public void tearDown() {
+			login.logout(driver);
+			driver.manage().deleteAllCookies();
+			if (driver != null) {
+				driver.quit();
+			}
+		}
 	
 }

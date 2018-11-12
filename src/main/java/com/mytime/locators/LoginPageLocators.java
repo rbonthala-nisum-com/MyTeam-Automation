@@ -9,7 +9,7 @@ public interface LoginPageLocators {
 	By OKTA_Sign_In_Button = By.xpath("//input[@type='submit']");
 	By signInWithGoogle = By.className("abcRioButtonContents");
 	By clickEmail = By.className("uRhzae");
-	By chooseExistingAccount = By.className("M8HEDc cd29Sd bxPAYd W7Aapd znIWoc");
+	By chooseExistingAccount = By.className("HWIeKd");
 	By loginConformationPopup = By.xpath("//span[text()='Continue']");
 	By logoutDropDown = By.className("dropdown-toggle");
 	By logoutButton = By.xpath("//div[@class='desc']/a");
